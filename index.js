@@ -11,6 +11,6 @@ mongoose.connect('mongodb://localhost:27017/good-reads', { useNewUrlParser: true
 });
 
 app.listen(5000, (err) => {
-    if (!err) console.log("welcome to good reads server")
+    if (!err) return console.log("welcome to good reads server")
     console.log(err)
 })
