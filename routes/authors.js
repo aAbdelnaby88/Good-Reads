@@ -37,7 +37,7 @@ router.post('/', async(req, res)=>{
 
  router.get('/:id', async(req, res) => {
     try {
-     let author= await author.findOne({_id: req.params.id}).populate('author');
+     let author= await Author.findOne({_id: req.params.id}).populate('author');
      res.json({
          message: "authors details",
          data : author
@@ -49,6 +49,24 @@ router.post('/', async(req, res)=>{
      });
     }
  });
+
+
+ router.patch('/:id',async (req, res)=>{
+    try {
+        let author=await Author.findByIdAndUpdate(req.params.id,{$set: req.body }, { new: true });
+        res.json({
+            message: "author updated successfully",
+            data : author
+        });
+    } catch (err) {
+        res.json({
+            message: 'error',
+            err: err
+        });
+    }
+});
+
+
 
 
 
