@@ -35,7 +35,20 @@ router.post('/', async(req, res)=>{
     }
  });
 
-
+ router.get('/:id', async(req, res) => {
+    try {
+     let author= await author.findOne({_id: req.params.id}).populate('author');
+     res.json({
+         message: "authors details",
+         data : author
+     });
+    } catch (err) {
+     res.json({
+         message: 'error',
+         err: err
+     });
+    }
+ });
 
 
 
