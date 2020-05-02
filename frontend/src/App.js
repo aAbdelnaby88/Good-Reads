@@ -9,6 +9,7 @@ import RootReducer from "./reducers";
 import "./App.css";
 
 import Home from "./components/home/Home";
+import AdminHome from "./components/admin/Home";
 
 const store = createStore(
   RootReducer,
@@ -25,8 +26,8 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route path="/books">
-            <h3>Books</h3>
+          <Route path="/admin">
+            <AdminHome />
           </Route>
           <Route path="/">
             <Home />
