@@ -66,7 +66,20 @@ router.post('/', async(req, res)=>{
     }
 });
 
-
+router.delete('/:id', async(req, res)=>{
+    try {
+        let author=await Author.findByIdAndRemove(req.params.id);
+        res.json({
+            message: "author removed successfully",
+            data : author
+        });
+    } catch (err) {
+        res.json({
+            message: 'error',
+            err: err
+        });
+    }
+});
 
 
 
