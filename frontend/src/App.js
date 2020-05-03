@@ -8,7 +8,9 @@ import Thunk from "redux-thunk";
 import RootReducer from "./reducers";
 import "./App.css";
 
-console.log(`env=>${process.env.NODE_ENV}`);
+import Home from "./components/home/Home";
+import AdminHome from "./components/admin/Home";
+
 const store = createStore(
   RootReducer,
   compose(
@@ -24,11 +26,11 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route path="/books">
-            <h3>Books</h3>
+          <Route path="/admin">
+            <AdminHome />
           </Route>
           <Route path="/">
-            <h3>Home</h3>
+            <Home />
           </Route>
         </Switch>
       </Router>
