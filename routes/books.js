@@ -4,12 +4,14 @@ var Book = require('../models/book');
 
 router.get('/', async (req, res) => {
     try {
-        const books = Book.find().populate('reviews')
+        const books = await Book.find().populate('reviews')
         res.json({
             message: "All books",
             data: books
         });
     } catch (err) {
+        console.log(err);
+
         res.json({
             message: 'error',
             err: err
@@ -19,7 +21,7 @@ router.get('/', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     try {
-        const book = Book.findById(req.params.id).populate('reviews')
+        const book = await Book.findById(req.params.id).populate('reviews')
         res.json({
             message: "show book details",
             data: book
