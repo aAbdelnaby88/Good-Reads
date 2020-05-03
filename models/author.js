@@ -6,7 +6,7 @@ const authorSchema = new mongoose.Schema({
     lastName: { type: String, required: [true, "can't be blank"], max: 20 },
     dob: { type: Date },
     image: { type: String },
-    books: { type: mongoose.Schema.Types.ObjectId, ref: 'Book' }
+    books: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }]
 })
 
 authorSchema.methods.getFullName = function getFullName() {
