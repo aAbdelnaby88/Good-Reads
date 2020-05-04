@@ -65,10 +65,10 @@ app.post('/new', async (req, res) => {
 // Update a categoty with a given id
 app.patch('/edit/:id', async (req, res) => {
     try {
-        let book = await Category.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
+        let category = await Category.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
         res.json({
             message: "category updated successfully",
-            data: book
+            data: category
         });
     } catch (err) {
         res.json({
@@ -81,7 +81,7 @@ app.patch('/edit/:id', async (req, res) => {
 // delete a category with a given id.
 app.delete('/delete/:id', async (req, res) => {
     try {
-        let book = await Category.findByIdAndDelete(req.params.id);
+        let category = await Category.findByIdAndDelete(req.params.id);
         res.json({
             message: "category deleted successfully"
         });
