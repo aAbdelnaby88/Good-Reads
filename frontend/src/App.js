@@ -11,9 +11,11 @@ import "react-notifications-component/dist/theme.css";
 import RootReducer from "./reducers";
 import "./App.css";
 
-import Home from "./components/home/Home";
+import Home from "./components/home";
 import AdminHome from "./components/admin/Home";
 import AdminLogin from "./components/admin/login";
+
+import UserHome from "./components/user/Home";
 
 import AdminRoute from "./components/admin/AdminRoute";
 import AdminLoggedInRoute from "./components/admin/AdminLoggedInRoute";
@@ -35,18 +37,11 @@ function App() {
       <ReactNotification />
       <Router>
         <Switch>
-        
-          <AdminLoggedInRoute
-            component={AdminLogin}
-            path="/login"
-            exact
-          />
-            <AdminRoute
-            component={AdminHome}
-            path="/admin"
-            exact
-          />
-          <Route path="/">
+          <AdminLoggedInRoute component={AdminLogin} path="/login" exact />
+          <AdminRoute component={AdminHome} path="/admin" exact />
+         
+          <Route path="/" component={UserHome} />
+          <Route path="/" exact>
             <Home />
           </Route>
         </Switch>
