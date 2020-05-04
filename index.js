@@ -6,6 +6,8 @@ const authMWare = require('./middlewares/authMWare')
 const app = express()
 const authorRouter = require('./routes/authors');
 const bookRouter = require('./routes/books');
+const categRouter = require('./routes/category')
+const searchRouter = require('./routes/search')
 
 app.use(express.json())
 app.use(bodyparser.json())
@@ -15,6 +17,10 @@ app.use('/api/books', bookRouter)
 app.use('/api/authors', authorRouter)
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use('/api/', authRouter)
+app.use('/categories', categRouter)
+app.use('/search', searchRouter)
+app.use('/rate', searchRouter)
+app.use('/reviews', searchRouter)
 app.use(authMWare)
 
 
