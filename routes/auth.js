@@ -22,10 +22,7 @@ router.post('/login', async(req, res) => {
             });
         }
     } catch (err) {
-        return res.json({
-            message: "User Not Found !!",
-            err: err
-        })
+        return res.status(401).send({ message: 'Login Failed !!' })
     }
 });
 
@@ -39,10 +36,7 @@ router.post('/admin/login', (req, res) => {
             data: accessToken
         });
     } else {
-        return res.json({
-            message: 'Username or Password not correct !!',
-            err: err
-        });
+        return res.status(401).send({ message: 'Login Failed !!' })
     }
 });
 
@@ -72,10 +66,7 @@ router.post('/signup', (req, res) => {
                 }
             }
         } catch (err) {
-            return res.json({
-                message: 'Failed, try again !!',
-                err: err
-            });
+            return res.status(400).send({ message: 'user added failed' })
         }
     })
 })

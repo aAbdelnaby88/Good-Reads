@@ -14,10 +14,7 @@ router.get('/', async(req, res) => {
             data: authors
         });
     } catch (err) {
-        res.json({
-            message: 'error',
-            err: err
-        });
+        return res.status(401).send({ message: 'can not get all authors' })
     }
 });
 
