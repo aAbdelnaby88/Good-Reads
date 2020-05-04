@@ -10,12 +10,12 @@ import CustomNavItem from "./CustomNavItem";
 
 import { APP_NAME } from "../../utils";
 
-import { updateAdminProps } from "../../actions/adminAction";
+import { updateAdminProps, getAllBooks } from "../../actions/adminAction";
 
 class Home extends Component {
-
   componentDidMount() {
     document.title = `Admin panel - ${APP_NAME}`;
+    this.props.getAllBooks()
   }
 
   toggle = (tab) => {
@@ -36,14 +36,12 @@ class Home extends Component {
             activeTab={activeTab}
             toggle={this.toggle}
           />
-
           <CustomNavItem
             name="Books"
             tab="2"
             activeTab={activeTab}
             toggle={this.toggle}
           />
-
           <CustomNavItem
             name="Authors"
             tab="3"
@@ -51,7 +49,6 @@ class Home extends Component {
             toggle={this.toggle}
           />
         </Nav>
-
         <TabContent activeTab={activeTab}>
           <TabPane tabId="1">
             <Categories />
@@ -72,4 +69,4 @@ const mapStateToProps = (state) => {
   return { activeTab };
 };
 
-export default connect(mapStateToProps, { updateAdminProps })(Home);
+export default connect(mapStateToProps, { updateAdminProps,getAllBooks })(Home);

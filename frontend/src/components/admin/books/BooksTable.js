@@ -44,7 +44,10 @@ class BooksTable extends Component {
     { Header: "Name", accessor: "name" },
     { Header: "Image", accessor: "image" },
     { Header: "Category", accessor: "category.name" },
-    { Header: "Author", accessor: "author.firstname" },
+    { Header: "Author", Cell:(info)=>{
+      const {firstName,lastName}=info.original.author
+      return firstName+" "+lastName
+    }},
     {
       Header: "Actions",
       Cell: this.renderActions.bind(this),

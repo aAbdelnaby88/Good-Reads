@@ -18,7 +18,7 @@ router.post('/login', async(req, res) => {
             const accessToken = jwt.sign({ id: u.id, email: u.email, image: u.image }, accessTokenSecret, { expiresIn: '24hr' });
             return res.json({
                 message: 'User Logged in Successfully',
-                data: accessToken
+                token: accessToken
             });
         }
     } catch (err) {
@@ -33,7 +33,7 @@ router.post('/admin/login', (req, res) => {
         const accessToken = jwt.sign({ username: username, isAdmin: true }, accessTokenSecret, { expiresIn: '24hr' });
         return res.json({
             message: 'Admin Logged in Successfully',
-            data: accessToken
+            token: accessToken
         });
     } else {
         return res.status(401).send({ message: 'Login Failed !!' })
@@ -61,7 +61,7 @@ router.post('/signup', (req, res) => {
                     const accessToken = jwt.sign({ id: user.id, email: user.email, image: user.image }, accessTokenSecret, { expiresIn: '24hr' });
                     return res.json({
                         message: 'User Created Successfully',
-                        data: accessToken
+                        token: accessToken
                     });
                 }
             }
