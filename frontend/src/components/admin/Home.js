@@ -8,7 +8,7 @@ import Books from "./books";
 import Categories from "./categories";
 import CustomNavItem from "./CustomNavItem";
 
-import { APP_NAME } from "../../constants";
+import { APP_NAME } from "../../utils";
 
 import { updateAdminProps } from "../../actions/adminAction";
 

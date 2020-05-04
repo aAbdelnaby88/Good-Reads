@@ -7,6 +7,12 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
+  token: null,
+
+  email: "",
+  password: "",
+  emailState: "",
+
   activeTab: "1",
   isCategoryModal: false,
   categories: [

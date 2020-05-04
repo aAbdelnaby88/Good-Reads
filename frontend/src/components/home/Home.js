@@ -3,7 +3,7 @@ import { Container, Row, Col } from "reactstrap";
 import NavbarForm from "./NavbarForm";
 import RegisterForm from "./RegisterForm";
 import HomeContent from "./HomeContent";
-import { APP_NAME } from "../../constants";
+import { APP_NAME } from "../../utils";
 
 export default class Home extends Component {
   componentDidMount() {
