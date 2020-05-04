@@ -11,8 +11,8 @@ app.use(express.json())
 app.use(bodyparser.json())
 app.use(express.static('./public'))
 app.use(express.urlencoded({ extended: true }))
-app.use('/books', bookRouter)
-app.use('/authors',authorRouter)
+app.use('/api/books', bookRouter)
+app.use('/api/authors', authorRouter)
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use('/api/', authRouter)
 app.use(authMWare)
@@ -27,4 +27,3 @@ app.listen(5000, (err) => {
     if (!err) return console.log("welcome to good reads server")
     console.log(err)
 })
-
