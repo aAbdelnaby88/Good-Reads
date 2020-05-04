@@ -16,7 +16,10 @@ router.post('/login', async(req, res) => {
         console.log(u.image)
         if (u) {
             const accessToken = jwt.sign({ id: u.id, email: u.email, image: u.image }, accessTokenSecret, { expiresIn: '24hr' });
-            return res.json({ accessToken });
+            return res.json({
+                message: 'User Logged in Successfully',
+                data: accessToken
+            });
         }
     } catch (err) {
         return res.json({
@@ -29,11 +32,17 @@ router.post('/login', async(req, res) => {
 
 router.post('/admin/login', (req, res) => {
     const { username, password } = req.body
-    if (username === process.env.ADMIN_USERNAME && password == process.env.ADMIN_PASSWORD) {
+    if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
         const accessToken = jwt.sign({ username: username, isAdmin: true }, accessTokenSecret, { expiresIn: '24hr' });
-        res.json({ accessToken });
+        return res.json({
+            message: 'Admin Logged in Successfully',
+            data: accessToken
+        });
     } else {
-        return res.sendStatus(404)
+        return res.json({
+            message: 'Username or Password not correct !!',
+            err: err
+        });
     }
 });
 
@@ -56,12 +65,17 @@ router.post('/signup', (req, res) => {
                     const user = new User({ firstName, lastName, email, password, image })
                     await user.save()
                     const accessToken = jwt.sign({ id: user.id, email: user.email, image: user.image }, accessTokenSecret, { expiresIn: '24hr' });
-                    return res.json({ accessToken });
+                    return res.json({
+                        message: 'User Created Successfully',
+                        data: accessToken
+                    });
                 }
             }
         } catch (err) {
-            console.log("xx")
-            return res.sendStatus(400)
+            return res.json({
+                message: 'Failed, try again !!',
+                err: err
+            });
         }
     })
 })

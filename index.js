@@ -4,14 +4,20 @@ const bodyparser = require('body-parser')
 const authRouter = require('./routes/auth')
 const authMWare = require('./middlewares/authMWare')
 const app = express()
+const authorRouter = require('./routes/authors');
+const bookRouter = require('./routes/books');
 
 app.use(express.json())
 app.use(bodyparser.json())
 app.use(express.static('./public'))
 app.use(express.urlencoded({ extended: true }))
+app.use('/api/books', bookRouter)
+app.use('/api/authors', authorRouter)
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use('/api/', authRouter)
 app.use(authMWare)
+
+
 
 mongoose.connect('mongodb://localhost:27017/good-reads', { 'useCreateIndex': true, useNewUrlParser: true, useUnifiedTopology: true, 'useFindAndModify': false }, (err) => {
     if (!err) console.log("Mongod Connected...")
