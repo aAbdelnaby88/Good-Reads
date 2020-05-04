@@ -5,6 +5,8 @@ import {
 } from "./types";
 import axios from "axios";
 
+import { API_HOST, handleError, showMessage, setAdminToken } from "../utils";
+
 export const updateAdminProps = (payload) => (dispatch) => {
   dispatch({
     type: UPDATE_ADMIN_PROPS,
@@ -24,4 +26,23 @@ export const mergeAdminProps = (payload) => (dispatch) => {
     type: MERGE_ADMIN_PROPS,
     payload,
   });
+};
+
+export const loginAdmin = (email, password) => (dispatch) => {
+  console.log(email, password);
+  axios
+    .post(`${API_HOST}/admin/login`, { username: email, password })
+    .then((data) => {
+      const { accessToken } = data.data;
+      dispatch(updateAdminProps([{ prop: "token", value: accessToken }]));
+      showMessage(
+        "Login Success!",
+        "Welecome, redirecting to admin panel...",
+        "success"
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+      handleError(err);
+    });
 };
