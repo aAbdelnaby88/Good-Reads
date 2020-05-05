@@ -1,4 +1,4 @@
-import React, { Component} from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import ReactTable from "react-table-v6";
 import "react-table-v6/react-table.css";
@@ -54,7 +54,7 @@ class CategoriesTable extends Component {
 
     return (
       <ReactTable
-        pageSize={10}
+        defaultPageSize="5"
         columns={this.columns}
         data={categories}
         getTdProps={() => {

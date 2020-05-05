@@ -17,7 +17,11 @@ import Select from "react-select";
 
 import Table from "./BooksTable";
 
-import { updateAdminProps } from "../../../actions/adminAction";
+import {
+  updateAdminProps,
+  addNewBook,
+  updateBook,
+} from "../../../actions/adminAction";
 
 class Books extends Component {
   toggle = () => {
@@ -37,13 +41,20 @@ class Books extends Component {
     const { name, value } = e.target;
     this.props.updateAdminProps([{ prop: "currentBook." + name, value }]);
   };
+  onChangeImage = (e) => {
+    const image = e.target.files[0];
+    this.props.updateAdminProps([{ prop: "currentBook.image", value: image }]);
+  };
   onSubmit = (e) => {
     e.preventDefault();
+    const { addNewBook, updateBook, currentBook } = this.props;
+    currentBook._id
+      ? updateBook(currentBook, currentBook.index)
+      : addNewBook(currentBook);
   };
   render() {
     const { isModal, currentBook, categories, authors } = this.props;
-    const { name, author, category, image } = currentBook;
-
+    const { _id, name, author, category } = currentBook;
     return (
       <div>
         <Row>
@@ -80,16 +91,19 @@ class Books extends Component {
                   required
                 />
               </FormGroup>
-              <FormGroup>
-                <CustomInput
-                  id="image"
-                  type="file"
-                  name="image"
-                  placeholder="choose image"
-                  onChange={this.onChange}
-                  value={image}
-                />
-              </FormGroup>
+              {!_id && (
+                <FormGroup>
+                  <CustomInput
+                    id="image"
+                    type="file"
+                    name="image"
+                    placeholder="choose image"
+                    onChange={this.onChangeImage}
+                    /*                   value={image}
+                     */
+                  />
+                </FormGroup>
+              )}
               <FormGroup>
                 <Select
                   value={category}
@@ -109,8 +123,8 @@ class Books extends Component {
                   value={author}
                   placeholder="Select author"
                   options={authors}
-                  getOptionLabel={({ firstname, lastname }) =>
-                    `${firstname} ${lastname}`
+                  getOptionLabel={({ firstName, lastName }) =>
+                    `${firstName} ${lastName}`
                   }
                   getOptionValue={(option) => option._id}
                   onChange={(value) =>
@@ -143,4 +157,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   updateAdminProps,
+  addNewBook,
+  updateBook,
 })(Books);

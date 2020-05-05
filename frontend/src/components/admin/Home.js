@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 
 import { Container, TabContent, TabPane, Nav } from "reactstrap";
 
@@ -15,7 +16,9 @@ import { updateAdminProps, getAllBooks } from "../../actions/adminAction";
 class Home extends Component {
   componentDidMount() {
     document.title = `Admin panel - ${APP_NAME}`;
-    this.props.getAllBooks()
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + this.props.token;
+    this.props.getAllBooks();
   }
 
   toggle = (tab) => {
@@ -65,8 +68,10 @@ class Home extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { activeTab } = state.admin;
-  return { activeTab };
+  const { activeTab, token } = state.admin;
+  return { activeTab, token };
 };
 
-export default connect(mapStateToProps, { updateAdminProps,getAllBooks })(Home);
+export default connect(mapStateToProps, { updateAdminProps, getAllBooks })(
+  Home
+);
