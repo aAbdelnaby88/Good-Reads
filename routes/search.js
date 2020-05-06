@@ -6,13 +6,13 @@ var bodyParser = require('body-parser');
 var Book = require('../models/book');
 app.use(bodyParser.json());
 
-app.get('/:q', (req, res) => {
+app.get('/:q', async (req, res) => {
 
     // Object of the user to sign up.
     search_object = req.params.q
-    const found_by_name = Book.find({'name': search_object})
-    const found_by_author = Book.find({'author': search_object})
-    const found_by_category = Book.find({'category': search_object})
+    const found_by_name = await Book.find({'name': search_object})
+    const found_by_author = await Book.find({'author': search_object})
+    const found_by_category = await Book.find({'category': search_object})
     if (found_by_name) {
         obj_name = {
             message: 'found by name',
