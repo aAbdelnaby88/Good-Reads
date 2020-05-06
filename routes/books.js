@@ -14,7 +14,7 @@ router.get('/', async(req, res) => {
         });
     } catch (err) {
         console.log(err);
-        return res.status(401).send({ message: 'can not get all books' })
+        return res.status(403).send({ message: 'can not get all books' })
     }
 });
 
@@ -34,7 +34,7 @@ router.get('/:id', async(req, res) => {
 
 router.post('/', authUser, async(req, res) => {
     if (!req.user.isAdmin) {
-        return res.status(403).send({ message: "you can not do this only admins" })
+        return res.status(401).send({ message: "you can not do this only admins" })
     }
     try {
         upload(req, res, async(err) => {
@@ -55,7 +55,7 @@ router.post('/', authUser, async(req, res) => {
             }
         })
     } catch (err) {
-        return res.status(401).send({ message: 'book added failed' })
+        return res.status(403).send({ message: 'book added failed' })
     }
 });
 
@@ -63,7 +63,7 @@ router.post('/', authUser, async(req, res) => {
 router.patch('/:id', authUser, async(req, res) => {
 
     if (!req.user.isAdmin) {
-        return res.status(403).send({ message: "you can not do this only admins" })
+        return res.status(401).send({ message: "you can not do this only admins" })
     }
     try {
         console.log(req.body)
@@ -73,13 +73,13 @@ router.patch('/:id', authUser, async(req, res) => {
             data: book
         });
     } catch (err) {
-        return res.status(401).send({ message: 'book updated failed' })
+        return res.status(403).send({ message: 'book updated failed' })
     }
 });
 
 router.delete('/:id', authUser, async(req, res) => {
     if (!req.user.isAdmin) {
-        return res.status(403).send({ message: "you can not do this only admins" })
+        return res.status(401).send({ message: "you can not do this only admins" })
     }
     try {
         let book = await Book.findByIdAndDelete(req.params.id);
@@ -87,7 +87,7 @@ router.delete('/:id', authUser, async(req, res) => {
             message: "book deleted successfully"
         });
     } catch (err) {
-        return res.status(401).send({ message: 'book deleted failed' })
+        return res.status(403).send({ message: 'book deleted failed' })
     }
 });
 
