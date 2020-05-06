@@ -14,14 +14,14 @@ router.get('/', async(req, res) => {
             data: authors
         });
     } catch (err) {
-        return res.status(401).send({ message: 'can not get all authors' })
+        return res.status(403).send({ message: 'can not get all authors' })
     }
 });
 
 
 router.post('/', authUser, async(req, res) => {
     if (!req.user.isAdmin) {
-        return res.status(403).send({ message: "you can not do this only admins" })
+        return res.status(401).send({ message: "you can not do this only admins" })
     }
     try {
         upload(req, res, async(err) => {
@@ -42,7 +42,7 @@ router.post('/', authUser, async(req, res) => {
             }
         })
     } catch (err) {
-        return res.status(401).send({ message: 'Failed, check entered data !!' })
+        return res.status(403).send({ message: 'Failed, check entered data !!' })
     }
 });
 
@@ -55,17 +55,16 @@ router.get('/:id', async(req, res) => {
             data: author
         });
     } catch (err) {
-        return res.status(401).send({ message: 'can not get author !!' })
+        return res.status(404).send({ message: 'can not get author !!' })
     }
 });
 
 
 router.patch('/:id', authUser, async(req, res) => {
+    if (!req.user.isAdmin) {
+        return res.status(401).send({ message: "you can not do this only admins" })
+    }
     try {
-        console.log(req.body)
-        if (!req.user.isAdmin) {
-            return res.status(403).send({ message: "you can not do this only admins" })
-        }
         const author = await Author.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true });
         res.json({
             message: "author updated successfully",
@@ -80,7 +79,7 @@ router.patch('/:id', authUser, async(req, res) => {
 
 router.delete('/:id', authUser, async(req, res) => {
     if (!req.user.isAdmin) {
-        return res.status(403).send({ message: "you can not do this only admins" })
+        return res.status(401).send({ message: "you can not do this only admins" })
     }
     try {
         let author = await Author.findByIdAndRemove(req.params.id);
