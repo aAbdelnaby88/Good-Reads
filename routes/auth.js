@@ -71,4 +71,13 @@ router.post('/signup', (req, res) => {
     })
 })
 
+router.get('/all', async(req, res, next) => {
+    try {
+        const users = await User.find({})
+        return res.json(users)
+    } catch (err) {
+        next(err)
+    }
+})
+
 module.exports = router;

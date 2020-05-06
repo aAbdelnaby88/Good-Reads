@@ -7,7 +7,7 @@ const upload = require('../middlewares/imageUpload')
 
 router.get('/', async(req, res) => {
     try {
-        const books = await Book.find().populate('author')
+        const books = await Book.find().populate('author').populate('category')
         res.json({
             message: "All books",
             data: books
@@ -21,7 +21,7 @@ router.get('/', async(req, res) => {
 
 router.get('/:id', async(req, res) => {
     try {
-        const book = await Book.findById(req.params.id)
+        const book = await Book.findById(req.params.id).populate('author').populate('category')
         res.json({
             message: "show book details",
             data: book

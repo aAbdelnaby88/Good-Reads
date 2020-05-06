@@ -9,7 +9,8 @@ var Category = require('../models/category');
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 const authUser = require('../middlewares/authMWare')
-    // Get all categories
+
+// Get all categories
 app.get('/', async(req, res) => {
 
     try {
@@ -45,7 +46,7 @@ app.post('/', authUser, async(req, res) => {
     }
     try {
 
-        let category = await Category.create(req.params.body);
+        let category = await Category.create(req.body);
         res.json({
             message: "Category added successfully",
             data: category
@@ -61,7 +62,7 @@ app.patch('/:id', authUser, async(req, res) => {
         return res.status(401).send({ message: "you can not do this only admins" })
     }
     try {
-        let category = await Category.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true });
+        let category = await Category.findByIdAndUpdate(req.params.id, req.body, { new: true });
         res.json({
             message: "category updated successfully",
             data: category
