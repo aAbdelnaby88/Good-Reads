@@ -44,7 +44,10 @@ class AuthorsTable extends Component {
     { Header: "Firstname", accessor: "firstname" },
     { Header: "Lastname", accessor: "lastname" },
     { Header: "Image", accessor: "image" },
-    { Header: "Date of birth", Cell: (info) => info.original.dob.toDateString() },
+    {
+      Header: "Date of birth",
+      Cell: (info) => info.original.dob.toDateString(),
+    },
 
     {
       Header: "Actions",
@@ -58,7 +61,7 @@ class AuthorsTable extends Component {
 
     return (
       <ReactTable
-        pageSize={10}
+        defaultPageSize="5"
         columns={this.columns}
         data={authors}
         getTdProps={() => {

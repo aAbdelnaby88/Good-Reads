@@ -7,8 +7,7 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  token: null,
-
+  token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im11aGFtbWFkYWxzYWllZDk2QGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTU4ODYzNzM1MSwiZXhwIjoxNTg4NzIzNzUxfQ.EFWYfhBG3e3jjJEKZEKkQt4yGqAAW3AEYKXpjgdzCzo",
   email: "",
   password: "",
   emailState: "",
@@ -25,29 +24,7 @@ const INITIAL_STATE = {
   },
 
   isBookModal: false,
-  books: [
-    {
-      _id: 1,
-      name: "How to be professional?",
-      author: { _id: 2, firstname: "Mahmoud", lastname: "Alsaied" },
-      category: { _id: 1, name: "Technology" },
-      image: "",
-    },
-    {
-      _id: 2,
-      name: "How to be professional 2?",
-      author: { _id: 2, firstname: "Mahmoud", lastname: "Alsaied" },
-      category: { _id: 1, name: "Technology" },
-      image: "",
-    },
-    {
-      _id: 3,
-      name: "How to be professional 3?",
-      author: { _id: 1, firstname: "Muhammad", lastname: "Alsaied" },
-      category: { _id: 1, name: "Technology" },
-      image: "",
-    },
-  ],
+  books: [],
   currentBook: {
     name: "",
   },
@@ -56,17 +33,17 @@ const INITIAL_STATE = {
   authors: [
     {
       _id: 1,
-      firstname: "Muhammad",
-      lastname: "Alsaied",
+      firstName: "Muhammad",
+      lastName: "Alsaied",
       dob: new Date(),
       image: "",
     },
     {
       _id: 2,
-      firstname: "Mahmoud",
-      lastname: "Alsaied",
+      firstName: "Mahmoud",
+      lastName: "Alsaied",
       dob: new Date(),
-      image: "",
+      image: null,
     },
   ],
   currentAuthor: {},

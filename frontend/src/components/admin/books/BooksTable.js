@@ -4,10 +4,11 @@ import ReactTable from "react-table-v6";
 import "react-table-v6/react-table.css";
 import { Button } from "reactstrap";
 
-import { updateAdminProps } from "../../../actions/adminAction";
+import { updateAdminProps, deleteBook } from "../../../actions/adminAction";
 
 class BooksTable extends Component {
-  editBookModal = (book) => {
+  editBookModal = (book, index) => {
+    book.index = index;
     this.props.updateAdminProps([
       { prop: "currentBook", value: book },
       {
@@ -17,11 +18,11 @@ class BooksTable extends Component {
     ]);
   };
 
-  renderActions = (info) => {
+  renderActions = ({ original, index }) => {
     return (
       <div>
         <Button
-          onClick={this.editBookModal.bind(this, info.original)}
+          onClick={this.editBookModal.bind(this, original, index)}
           color="primary"
           style={{ marginRight: 10, marginLeft: 10 }}
         >
@@ -31,6 +32,7 @@ class BooksTable extends Component {
           color="danger"
           onClick={() => {
             if (window.confirm("Are you sure?")) {
+              this.props.deleteBook(original._id, index);
             }
           }}
         >
@@ -44,7 +46,14 @@ class BooksTable extends Component {
     { Header: "Name", accessor: "name" },
     { Header: "Image", accessor: "image" },
     { Header: "Category", accessor: "category.name" },
-    { Header: "Author", accessor: "author.firstname" },
+    {
+      Header: "Author",
+      Cell: (info) => {
+        if (!info.original.author) return;
+        const { firstName, lastName } = info.original.author;
+        return firstName + " " + lastName;
+      },
+    },
     {
       Header: "Actions",
       Cell: this.renderActions.bind(this),
@@ -57,7 +66,7 @@ class BooksTable extends Component {
 
     return (
       <ReactTable
-        pageSize={10}
+        defaultPageSize="5"
         columns={this.columns}
         data={books}
         getTdProps={() => {
@@ -79,4 +88,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   updateAdminProps,
+  deleteBook,
 })(BooksTable);

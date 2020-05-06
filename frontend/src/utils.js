@@ -19,13 +19,14 @@ export const showMessage = (title, message, type) => {
     animationIn: ["animated", "fadeIn"],
     animationOut: ["animated", "fadeOut"],
     dismiss: {
-      duration: 5000,
+      duration: 2000,
       onScreen: true,
     },
   });
 };
 
 export const handleError = (err) => {
+  console.log(err)
   showMessage(
     "Error!",
     (err.response && err.response.data.message) || "Something went wrong.",

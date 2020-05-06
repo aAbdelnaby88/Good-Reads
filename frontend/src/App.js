@@ -40,10 +40,11 @@ function App() {
           <AdminLoggedInRoute component={AdminLogin} path="/login" exact />
           <AdminRoute component={AdminHome} path="/admin" exact />
          
-          <Route path="/" component={UserHome} />
           <Route path="/" exact>
             <Home />
           </Route>
+          <Route path="/" component={UserHome} />
+          
         </Switch>
       </Router>
     </Provider>
