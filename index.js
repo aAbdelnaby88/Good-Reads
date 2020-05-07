@@ -11,7 +11,7 @@ const categRouter = require('./routes/category')
 const searchRouter = require('./routes/search')
 const rateRouter = require('./routes/rate')
 const reviewRouter = require('./routes/reviews')
-
+const todoRouter = require('./routes/todo')
 
 app.use(express.json())
 app.use(cors())
@@ -26,6 +26,7 @@ app.use('/api/categories', categRouter)
 app.use('/api/search', searchRouter)
 app.use('/api/rate', rateRouter)
 app.use('/api/review', reviewRouter)
+app.use('/api/todo', todoRouter)
 app.use(authMWare)
 
 
