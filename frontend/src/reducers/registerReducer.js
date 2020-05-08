@@ -1,8 +1,8 @@
 import { UPDATE_REGISTER_FIELD } from "../actions/types";
 
 const INITIAL_STATE = {
-  firstname: "",
-  lastname: "",
+  firstName: "",
+  lastName: "",
   email: "",
   password: "",
   passwordConfirm: "",
@@ -11,12 +11,13 @@ const INITIAL_STATE = {
 };
 
 export default (state = INITIAL_STATE, action) => {
-  const newState = { ...state };
   switch (action.type) {
     case UPDATE_REGISTER_FIELD:
+      const newState = { ...state };
       const { key, value } = action.payload;
       newState[key] = value;
       break;
+    default:
+      return state;
   }
-  return newState;
 };

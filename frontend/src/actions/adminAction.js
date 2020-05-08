@@ -5,7 +5,7 @@ import {
 } from "./types";
 import axios from "axios";
 
-import { API_HOST, handleError, showMessage, setAdminToken } from "../utils";
+import { API_HOST, handleError, showMessage } from "../utils";
 
 export const updateAdminProps = (payload) => (dispatch) => {
   dispatch({
@@ -59,10 +59,10 @@ export const getAllBooks = () => (dispatch) => {
     });
 };
 
-const constructFormDataFromBookObject = (book) => {
+const constructFormDataFromBookObject = (user) => {
   const formData = new FormData();
 
-  const { name, author, category, image } = book;
+  const { name, author, category, image } = user;
   formData.append("name", name);
   /*   formData.append("author", author._id);
   formData.append("category", category._id); */

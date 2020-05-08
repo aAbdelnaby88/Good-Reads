@@ -1,13 +1,19 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import { Container, Row, Col } from "reactstrap";
 import NavbarForm from "./NavbarForm";
 import RegisterForm from "./RegisterForm";
 import HomeContent from "./HomeContent";
 import { APP_NAME } from "../../utils";
 
-export default class Home extends Component {
+class Home extends Component {
   componentDidMount() {
     document.title = `Home - ${APP_NAME}`;
+  }
+  componentDidUpdate() {
+    if (this.props.token) {
+      this.props.history.push("/dashboard");
+    }
   }
   render() {
     return (
@@ -25,3 +31,9 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({
+  token: state.general.token,
+});
+
+export default connect(mapStateToProps)(Home);

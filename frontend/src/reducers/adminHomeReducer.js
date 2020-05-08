@@ -7,7 +7,8 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  token:"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im11aGFtbWFkYWxzYWllZDk2QGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTU4ODYzNzM1MSwiZXhwIjoxNTg4NzIzNzUxfQ.EFWYfhBG3e3jjJEKZEKkQt4yGqAAW3AEYKXpjgdzCzo",
+  token:
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im11aGFtbWFkYWxzYWllZDk2QGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTU4ODYzNzM1MSwiZXhwIjoxNTg4NzIzNzUxfQ.EFWYfhBG3e3jjJEKZEKkQt4yGqAAW3AEYKXpjgdzCzo",
   email: "",
   password: "",
   emailState: "",
@@ -80,6 +81,7 @@ export default (state = INITIAL_STATE, action) => {
       }
       return newState;
     }
+    default:
+      return state;
   }
-  return state;
 };

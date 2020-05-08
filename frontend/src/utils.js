@@ -2,10 +2,10 @@ import { store } from "react-notifications-component";
 
 export const APP_NAME = "Good Reads";
 
-export const getAdminToken = () => localStorage.getItem("admin-token");
+export const getUserToken = () => localStorage.getItem("token");
 
-export const setAdminToken = (token) =>
-  localStorage.setItem("admin-token", token);
+export const setUserToken = (token) =>
+  localStorage.setItem("token", token);
 
 export const API_HOST = "http://localhost:5000/api";
 

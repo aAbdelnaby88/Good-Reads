@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-export default class Dashboard extends Component {
+export default class Categories extends Component {
   render() {
     return <div>Categories</div>;
   }

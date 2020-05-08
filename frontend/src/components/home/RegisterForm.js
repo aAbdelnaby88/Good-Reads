@@ -5,11 +5,10 @@ import {
   Button,
   Form,
   FormGroup,
-  Label,
   Input,
   FormFeedback,
 } from "reactstrap";
-import { updateRegisterField } from "../../actions/registerActions";
+import { updateRegisterField, signupUser } from "../../actions/registerActions";
 class RegisterForm extends Component {
   onChange = (e) => {
     const { name, value } = e.target;
@@ -22,7 +21,7 @@ class RegisterForm extends Component {
 
     this.props.updateRegisterField(
       "isConfirmPasswordInvalid",
-      this.props.password != value
+      this.props.password !== value
     );
 
     this.props.updateRegisterField(name, value);
@@ -33,32 +32,36 @@ class RegisterForm extends Component {
 
     this.props.updateRegisterField(
       "isConfirmPasswordInvalid",
-      this.props.passwordConfirm != value
+      this.props.passwordConfirm !== value
     );
 
     this.props.updateRegisterField(name, value);
   };
+  onChangeImage = (e) => {
+    const image = e.target.files[0];
+    this.props.updateRegisterField("image", image);
+  };
 
   onSubmit = (e) => {
     e.preventDefault();
-    console.log("submmiting");
-    const {
-      firstname,
-      lastname,
+    const { firstName, lastName, email, password, image } = this.props;
+
+    this.props.signupUser({
+      firstName,
+      lastName,
       email,
       password,
-      passwordConfirm,
       image,
-    } = this.props;
+    });
   };
+
   render() {
     const {
-      firstname,
-      lastname,
+      firstName,
+      lastName,
       email,
       password,
       passwordConfirm,
-      image,
       isConfirmPasswordInvalid,
     } = this.props;
     return (
@@ -66,20 +69,20 @@ class RegisterForm extends Component {
         <FormGroup>
           <Input
             type="text"
-            name="firstname"
+            name="firstName"
             placeholder="first name"
             onChange={this.onChange}
-            value={firstname}
+            value={firstName}
             required
           />
         </FormGroup>
         <FormGroup>
           <Input
             type="text"
-            name="lastname"
+            name="lastName"
             placeholder="last name"
             onChange={this.onChange}
-            value={lastname}
+            value={lastName}
             required
           />
         </FormGroup>
@@ -121,8 +124,8 @@ class RegisterForm extends Component {
             type="file"
             name="image"
             placeholder="choose image"
-            onChange={this.onChange}
-            value={image}
+            onChange={this.onChangeImage}
+            required
           />
         </FormGroup>
         <Button type="submit">Sign up</Button>
@@ -133,8 +136,8 @@ class RegisterForm extends Component {
 
 const mapStateToProps = (state) => {
   const {
-    firstname,
-    lastname,
+    firstName,
+    lastName,
     email,
     password,
     passwordConfirm,
@@ -142,8 +145,8 @@ const mapStateToProps = (state) => {
     isConfirmPasswordInvalid,
   } = state.register;
   return {
-    firstname,
-    lastname,
+    firstName,
+    lastName,
     email,
     password,
     passwordConfirm,
@@ -152,4 +155,6 @@ const mapStateToProps = (state) => {
   };
 };
 
-export default connect(mapStateToProps, { updateRegisterField })(RegisterForm);
+export default connect(mapStateToProps, { updateRegisterField, signupUser })(
+  RegisterForm
+);

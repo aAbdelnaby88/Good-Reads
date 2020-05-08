@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch } from "react-router-dom";
 
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
@@ -20,6 +20,9 @@ import UserHome from "./components/user/Home";
 import AdminRoute from "./components/admin/AdminRoute";
 import AdminLoggedInRoute from "./components/admin/AdminLoggedInRoute";
 
+import UserRoute from "./components/user/UserRoute";
+import UserLoggedInRoute from "./components/user/UserLoggedInRoute";
+
 const store = createStore(
   RootReducer,
   compose(
@@ -31,7 +34,6 @@ const store = createStore(
   )
 );
 function App() {
-  const AdminToken = store.getState().admin.token;
   return (
     <Provider store={store}>
       <ReactNotification />
@@ -39,12 +41,9 @@ function App() {
         <Switch>
           <AdminLoggedInRoute component={AdminLogin} path="/login" exact />
           <AdminRoute component={AdminHome} path="/admin" exact />
-         
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/" component={UserHome} />
-          
+
+          <UserLoggedInRoute path="/" exact component={Home} />
+          <UserRoute path="/" component={UserHome} />
         </Switch>
       </Router>
     </Provider>

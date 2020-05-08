@@ -15,7 +15,7 @@ router.post('/login', async(req, res) => {
         const u = await User.findOne({ email: email, password: password }, {})
         console.log(u.image)
         if (u) {
-            const accessToken = jwt.sign({ id: u.id, email: u.email, image: u.image }, accessTokenSecret, { expiresIn: '24hr' });
+            const accessToken = jwt.sign({ id: u.id, email: u.email, image: u.image }, accessTokenSecret, { expiresIn: '365d' });
             return res.json({
                 message: 'User Logged in Successfully',
                 token: accessToken
@@ -30,7 +30,7 @@ router.post('/login', async(req, res) => {
 router.post('/admin/login', (req, res) => {
     const { username, password } = req.body
     if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
-        const accessToken = jwt.sign({ username: username, isAdmin: true }, accessTokenSecret, { expiresIn: '24hr' });
+        const accessToken = jwt.sign({ username: username, isAdmin: true }, accessTokenSecret, { expiresIn: '365d' });
         return res.json({
             message: 'Admin Logged in Successfully',
             token: accessToken
@@ -58,7 +58,7 @@ router.post('/signup', (req, res) => {
                     console.log(req.body)
                     const user = new User({ firstName, lastName, email, password, image })
                     await user.save()
-                    const accessToken = jwt.sign({ id: user.id, email: user.email, image: user.image }, accessTokenSecret, { expiresIn: '24hr' });
+                    const accessToken = jwt.sign({ id: user.id, email: user.email, image: user.image }, accessTokenSecret, { expiresIn: '365d' });
                     return res.json({
                         message: 'User Created Successfully',
                         token: accessToken
