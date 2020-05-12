@@ -4,10 +4,11 @@ export const APP_NAME = "Good Reads";
 
 export const getUserToken = () => localStorage.getItem("token");
 
-export const setUserToken = (token) =>
-  localStorage.setItem("token", token);
+export const setUserToken = (token) => localStorage.setItem("token", token);
+export const deleteUserToken = () => localStorage.removeItem("token");
 
-export const API_HOST = "http://localhost:5000/api";
+export const HOST = "http://localhost:5000";
+export const API_HOST = `${HOST}/api`;
 
 export const showMessage = (title, message, type) => {
   store.addNotification({
@@ -26,7 +27,7 @@ export const showMessage = (title, message, type) => {
 };
 
 export const handleError = (err) => {
-  console.log(err)
+  console.log(err);
   showMessage(
     "Error!",
     (err.response && err.response.data.message) || "Something went wrong.",

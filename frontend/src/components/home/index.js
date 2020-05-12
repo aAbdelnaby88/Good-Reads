@@ -33,7 +33,7 @@ class Home extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  token: state.general.token,
+  token: state.login.token,
 });
 
 export default connect(mapStateToProps)(Home);

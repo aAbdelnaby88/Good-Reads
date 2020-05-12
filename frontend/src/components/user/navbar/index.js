@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { connect } from "react-redux";
 import {
   Collapse,
@@ -10,8 +10,13 @@ import {
   Form,
   Input,
   NavbarToggler,
+  Button,
+  Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+
+import { HOST } from "../../../utils";
+import { logoutUser } from "../../../actions/loginActions";
 
 class MainNavbar extends Component {
   constructor() {
@@ -19,6 +24,7 @@ class MainNavbar extends Component {
     this.state = { isOpen: false };
   }
   render() {
+    const { image } = this.props.user;
     const toggle = () => this.setState({ isOpen: !this.state.isOpen });
 
     return (
@@ -43,13 +49,26 @@ class MainNavbar extends Component {
                 Authors
               </NavLink>
             </NavItem>
-            <NavItem className="offset-md-1  col-8"  >
+            <NavItem className="offset-md-1  col-8">
               <Form>
                 <Input size="40" type="text" placeholder="Type book name" />
               </Form>
             </NavItem>
           </Nav>
-          <Nav className="ml-auto" navbar></Nav>
+          <Nav className="ml-auto" navbar>
+            <NavItem>
+              <img
+                src={`${HOST}/images/${image}`}
+                style={{ width: "50px", height: "40px" }}
+                className="rounded-circle"
+              />
+            </NavItem>
+            <NavItem className="offset-md-1  col-12">
+              <Button onClick={this.props.logoutUser}>
+                <i className="fa fa-sign-out"></i>
+              </Button>
+            </NavItem>
+          </Nav>
         </Collapse>
         <NavbarToggler onClick={toggle} />
       </Navbar>
@@ -57,8 +76,8 @@ class MainNavbar extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const {} = state;
-  return {};
+  const { user } = state.login;
+  return { user };
 };
 
-export default connect(mapStateToProps)(MainNavbar);
+export default connect(mapStateToProps, { logoutUser })(MainNavbar);

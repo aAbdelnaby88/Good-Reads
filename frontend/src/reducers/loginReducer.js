@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   email: "",
   password: "",
   token: null,
+  user: { image: "" },
 };
 
 export default (state = INITIAL_STATE, action) => {
