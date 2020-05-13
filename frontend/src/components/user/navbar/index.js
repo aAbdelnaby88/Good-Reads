@@ -27,7 +27,7 @@ class MainNavbar extends Component {
     const toggle = () => this.setState({ isOpen: !this.state.isOpen });
 
     return (
-      <Navbar color="light" light expand="md">
+      <Navbar color="light" light expand="md" style={{marginBottom:"10px"}}>
         <NavbarBrand tag={Link} to="/dashboard">
           Good Reads
         </NavbarBrand>

@@ -2,6 +2,7 @@ import {
   UPDATE_BOOKS_PROPS,
   DELETE_BOOKS_PROPS,
   MERGE_BOOKS_PROPS,
+  UPDATE_CATEGORIES_PROPS,
 } from "./types";
 import axios from "axios";
 
@@ -33,8 +34,19 @@ export const getAllBooks = () => (dispatch) => {
     .get(`${API_HOST}/books`)
     .then((data) => {
       const books = data.data.data;
-      console.log(books);
+
+      const categories = books.reduce((acc, book) => {
+        const category = book.category;
+        if (!acc.hasOwnProperty(category._id))
+          acc[category._id] = { name: category.name, books: [book] };
+        else acc[category._id]["books"].push(book);
+        return acc;
+      }, {});
       dispatch(updateBooksProps([{ prop: "books", value: books }]));
+      dispatch({
+        type: UPDATE_CATEGORIES_PROPS,
+        payload: [{ prop: "categoriesList", value: categories }],
+      });
     })
     .catch((err) => {
       handleError(err);

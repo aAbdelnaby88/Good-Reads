@@ -9,6 +9,7 @@ import {
 const INITIAL_STATE = {
   isCategoryModal: false,
   categories: [],
+  categoriesList: {},
   currentCategory: {
     name: "",
   },

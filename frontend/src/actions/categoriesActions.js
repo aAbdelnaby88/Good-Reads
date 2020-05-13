@@ -33,7 +33,23 @@ export const getAllCategories = () => (dispatch) => {
     .get(`${API_HOST}/categories`)
     .then((data) => {
       const categories = data.data.data;
-      dispatch(updateCategoriesProps([{ prop: "categories", value: categories }]));
+      dispatch(
+        updateCategoriesProps([{ prop: "categories", value: categories }])
+      );
+    })
+    .catch((err) => {
+      handleError(err);
+    });
+};
+
+export const getCategory = (_id) => (dispatch) => {
+  axios
+    .get(`${API_HOST}/categories/${_id}`)
+    .then((data) => {
+      const category = data.data.data;
+      dispatch(
+        updateCategoriesProps([{ prop: "currentCategory", value: category }])
+      );
     })
     .catch((err) => {
       handleError(err);
@@ -47,7 +63,9 @@ export const addNewCategory = (category) => (dispatch) => {
     .then((data) => {
       const category = data.data.data;
       dispatch(mergeCategoriesProps([{ prop: "categories", value: category }]));
-      dispatch(updateCategoriesProps([{ prop: "isCategoryModal", value: false }]));
+      dispatch(
+        updateCategoriesProps([{ prop: "isCategoryModal", value: false }])
+      );
       showMessage("Success!", data.data.message, "success");
     })
     .catch((err) => {
@@ -61,9 +79,13 @@ export const updateCategory = (category, index) => (dispatch) => {
     .then((data) => {
       const category = data.data.data;
       dispatch(
-        updateCategoriesProps([{ prop: "categories." + index, value: category }])
+        updateCategoriesProps([
+          { prop: "categories." + index, value: category },
+        ])
       );
-      dispatch(updateCategoriesProps([{ prop: "isCategoryModal", value: false }]));
+      dispatch(
+        updateCategoriesProps([{ prop: "isCategoryModal", value: false }])
+      );
       showMessage("Success!", data.data.message, "success");
     })
     .catch((err) => {

@@ -8,6 +8,7 @@ import { Container } from "reactstrap";
 import Navbar from "./navbar";
 import Dashboard from "./dashboard";
 import Categories from "./categories";
+import Category from "./categories/category";
 
 import { getUserToken } from "../../utils";
 import { updateLoginField } from "../../actions/loginActions";
@@ -38,6 +39,7 @@ class UserHome extends Component {
           <Navbar />
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/categories" exact component={Categories} />
+          <Route path="/categories/:id" exact component={Category} />
         </Switch>
       </Container>
     );

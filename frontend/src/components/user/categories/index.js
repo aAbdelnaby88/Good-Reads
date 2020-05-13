@@ -1,18 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col } from "reactstrap";
+import { Row, Col,Jumbotron } from "reactstrap";
 import { Link } from "react-router-dom";
 
 class Categories extends Component {
   render() {
     const { categories } = this.props;
+    console.log("cc", Object.keys(categories));
     return (
       <div>
-        <h2>Categories</h2>
+        
+        <h2
+          style={{
+            fontWeight: "bold",
+            textTransform: "uppercase",
+          }}
+        >
+          Categories
+        </h2>
         <hr />
         <Row>
-          {categories.map(({ _id, name }) => (
-            <Col xs="6">
+          {Object.keys(categories).map((_id) => (
+            <Col key={_id} xs="6">
               <div>
                 <Link to={"/categories/" + _id}>
                   <h3
@@ -22,7 +31,7 @@ class Categories extends Component {
                       textTransform: "uppercase",
                     }}
                   >
-                    {name}
+                    {categories[_id].name}
                   </h3>
                 </Link>
               </div>
@@ -35,8 +44,8 @@ class Categories extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { categories } = state.categories;
-  return { categories };
+  const { categoriesList } = state.categories;
+  return { categories: categoriesList };
 };
 
 export default connect(mapStateToProps)(Categories);
