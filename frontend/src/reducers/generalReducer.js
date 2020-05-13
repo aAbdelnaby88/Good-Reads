@@ -2,7 +2,8 @@ import dotProp from "dot-prop-immutable";
 
 import { UPDATE_GENERAL_PROPS } from "../actions/types";
 const INITIAL_STATE = {
-  token: null,
+  author: [],
+  categories: [],
 };
 
 export default (state = INITIAL_STATE, action) => {

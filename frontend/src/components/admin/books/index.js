@@ -18,32 +18,33 @@ import Select from "react-select";
 import Table from "./BooksTable";
 
 import {
-  updateAdminProps,
   addNewBook,
   updateBook,
-} from "../../../actions/adminAction";
+  updateBooksProps,
+} from "../../../actions/booksActions";
 
 class Books extends Component {
   toggle = () => {
-    this.props.updateAdminProps([
+    const { isModal, categories, authors } = this.props;
+    this.props.updateBooksProps([
       {
         prop: "currentBook",
-        value: { name: "" },
+        value: { name: "", category: categories[0], author: authors[0] },
       },
       {
         prop: "isBookModal",
-        value: !this.props.isModal,
+        value: !isModal,
       },
     ]);
   };
 
   onChange = (e) => {
     const { name, value } = e.target;
-    this.props.updateAdminProps([{ prop: "currentBook." + name, value }]);
+    this.props.updateBooksProps([{ prop: "currentBook." + name, value }]);
   };
   onChangeImage = (e) => {
     const image = e.target.files[0];
-    this.props.updateAdminProps([{ prop: "currentBook.image", value: image }]);
+    this.props.updateBooksProps([{ prop: "currentBook.image", value: image }]);
   };
   onSubmit = (e) => {
     e.preventDefault();
@@ -94,13 +95,12 @@ class Books extends Component {
               {!_id && (
                 <FormGroup>
                   <CustomInput
+                    required
                     id="image"
                     type="file"
                     name="image"
                     placeholder="choose image"
                     onChange={this.onChangeImage}
-                    /*                   value={image}
-                     */
                   />
                 </FormGroup>
               )}
@@ -111,8 +111,9 @@ class Books extends Component {
                   options={categories}
                   getOptionLabel={(option) => option.name}
                   getOptionValue={(option) => option._id}
+                  required
                   onChange={(value) =>
-                    this.props.updateAdminProps([
+                    this.props.updateBooksProps([
                       { prop: "currentBook.category", value },
                     ])
                   }
@@ -128,7 +129,7 @@ class Books extends Component {
                   }
                   getOptionValue={(option) => option._id}
                   onChange={(value) =>
-                    this.props.updateAdminProps([
+                    this.props.updateBooksProps([
                       { prop: "currentBook.author", value },
                     ])
                   }
@@ -151,12 +152,14 @@ class Books extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { isBookModal, currentBook, categories, authors } = state.admin;
+  const { isBookModal, currentBook } = state.books;
+  const { authors } = state.authors;
+  const { categories } = state.categories;
   return { isModal: isBookModal, currentBook, categories, authors };
 };
 
 export default connect(mapStateToProps, {
-  updateAdminProps,
+  updateBooksProps,
   addNewBook,
   updateBook,
 })(Books);

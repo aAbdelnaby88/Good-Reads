@@ -15,14 +15,14 @@ import {
 import Table from "./CategoriesTable";
 
 import {
-  updateAdminProps,
+  updateCategoriesProps,
   addNewCategory,
   updateCategory,
-} from "../../../actions/adminAction";
+} from "../../../actions/categoriesActions";
 
 class Categories extends Component {
   toggle = () => {
-    this.props.updateAdminProps([
+    this.props.updateCategoriesProps([
       {
         prop: "currentCategory",
         value: { name: "" },
@@ -36,7 +36,9 @@ class Categories extends Component {
 
   onChange = (e) => {
     const { name, value } = e.target;
-    this.props.updateAdminProps([{ prop: "currentCategory." + name, value }]);
+    this.props.updateCategoriesProps([
+      { prop: "currentCategory." + name, value },
+    ]);
   };
   onSubmit = (e) => {
     e.preventDefault();
@@ -98,12 +100,12 @@ class Categories extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { isCategoryModal, currentCategory } = state.admin;
+  const { isCategoryModal, currentCategory } = state.categories;
   return { isModal: isCategoryModal, currentCategory };
 };
 
 export default connect(mapStateToProps, {
-  updateAdminProps,
+  updateCategoriesProps,
   addNewCategory,
   updateCategory,
 })(Categories);

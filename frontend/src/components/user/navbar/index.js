@@ -11,7 +11,6 @@ import {
   Input,
   NavbarToggler,
   Button,
-  Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 

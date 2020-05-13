@@ -1,23 +1,22 @@
 import dotProp from "dot-prop-immutable";
 
 import {
-  UPDATE_ADMIN_PROPS,
-  DELETE_ADMIN_PROPS,
-  MERGE_ADMIN_PROPS,
+  UPDATE_CATEGORIES_PROPS,
+  DELETE_CATEGORIES_PROPS,
+  MERGE_CATEGORIES_PROPS,
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  token: "",
-  email: "",
-  password: "",
-  emailState: "",
-
-  activeTab: "1",
+  isCategoryModal: false,
+  categories: [],
+  currentCategory: {
+    name: "",
+  },
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case UPDATE_ADMIN_PROPS: {
+    case UPDATE_CATEGORIES_PROPS: {
       let newState = state;
       for (let i = 0; i < action.payload.length; i++) {
         newState = dotProp.set(
@@ -28,7 +27,7 @@ export default (state = INITIAL_STATE, action) => {
       }
       return newState;
     }
-    case MERGE_ADMIN_PROPS: {
+    case MERGE_CATEGORIES_PROPS: {
       let newState = state;
       for (let i = 0; i < action.payload.length; i++) {
         newState = dotProp.merge(
@@ -39,7 +38,7 @@ export default (state = INITIAL_STATE, action) => {
       }
       return newState;
     }
-    case DELETE_ADMIN_PROPS: {
+    case DELETE_CATEGORIES_PROPS: {
       let newState = state;
       for (let i = 0; i < action.payload.length; i++) {
         newState = dotProp.delete(newState, action.payload[i].prop);

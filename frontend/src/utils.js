@@ -16,7 +16,7 @@ export const showMessage = (title, message, type) => {
     message,
     type,
     insert: "top",
-    container: "bottom-right",
+    container: "top-center",
     animationIn: ["animated", "fadeIn"],
     animationOut: ["animated", "fadeOut"],
     dismiss: {

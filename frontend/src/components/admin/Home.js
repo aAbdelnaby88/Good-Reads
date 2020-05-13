@@ -13,10 +13,12 @@ import { APP_NAME } from "../../utils";
 
 import {
   updateAdminProps,
-  getAllBooks,
-  getAllAuthors,
-  getAllCategories,
+
 } from "../../actions/adminAction";
+
+import { getAllBooks } from "../../actions/booksActions";
+import { getAllAuthors } from "../../actions/authorsActions";
+import { getAllCategories } from "../../actions/categoriesActions";
 
 class Home extends Component {
   componentDidMount() {

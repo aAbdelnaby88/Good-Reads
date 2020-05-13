@@ -5,12 +5,12 @@ import "react-table-v6/react-table.css";
 import { Button } from "reactstrap";
 
 import { HOST } from "../../../utils";
-import { updateAdminProps, deleteBook } from "../../../actions/adminAction";
+import { updateBooksProps, deleteBook } from "../../../actions/booksActions";
 
 class BooksTable extends Component {
   editBookModal = (book, index) => {
     book.index = index;
-    this.props.updateAdminProps([
+    this.props.updateBooksProps([
       { prop: "currentBook", value: book },
       {
         prop: "isBookModal",
@@ -75,7 +75,7 @@ class BooksTable extends Component {
 
     return (
       <ReactTable
-        defaultPageSize="5"
+        defaultPageSize={5}
         columns={this.columns}
         data={books}
         getTdProps={() => {
@@ -91,11 +91,11 @@ class BooksTable extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { books, isBookModal } = state.admin;
+  const { books, isBookModal } = state.books;
   return { books, isModal: isBookModal };
 };
 
 export default connect(mapStateToProps, {
-  updateAdminProps,
+  updateBooksProps,
   deleteBook,
 })(BooksTable);

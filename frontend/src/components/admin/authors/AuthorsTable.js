@@ -5,12 +5,15 @@ import "react-table-v6/react-table.css";
 import { Button } from "reactstrap";
 
 import { HOST } from "../../../utils";
-import { updateAdminProps, deleteAuthor } from "../../../actions/adminAction";
+import {
+  updateAuthorsProps,
+  deleteAuthor,
+} from "../../../actions/authorsActions";
 
 class AuthorsTable extends Component {
   editAuthorModal = (author, index) => {
     author.index = index;
-    this.props.updateAdminProps([
+    this.props.updateAuthorsProps([
       {
         prop: "currentAuthor",
         value: { ...author, dob: new Date(author.dob) },
@@ -75,7 +78,7 @@ class AuthorsTable extends Component {
 
     return (
       <ReactTable
-        defaultPageSize="5"
+        defaultPageSize={5}
         columns={this.columns}
         data={authors}
         getTdProps={() => {
@@ -91,11 +94,11 @@ class AuthorsTable extends Component {
   }
 }
 const mapStateToProps = (state) => {
-  const { authors, isAuthorModal } = state.admin;
+  const { authors, isAuthorModal } = state.authors;
   return { authors, isModal: isAuthorModal };
 };
 
 export default connect(mapStateToProps, {
-  updateAdminProps,
+  updateAuthorsProps,
   deleteAuthor,
 })(AuthorsTable);

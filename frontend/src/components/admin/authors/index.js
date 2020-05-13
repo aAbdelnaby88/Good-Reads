@@ -21,14 +21,14 @@ import "./customDatePickerWidth.css";
 import Table from "./AuthorsTable";
 
 import {
-  updateAdminProps,
+  updateAuthorsProps,
   addNewAuthor,
   updateAuthor,
-} from "../../../actions/adminAction";
+} from "../../../actions/authorsActions";
 
 class Authors extends Component {
   toggle = () => {
-    this.props.updateAdminProps([
+    this.props.updateAuthorsProps([
       {
         prop: "currentAuthor",
         value: { dob: new Date() },
@@ -42,11 +42,11 @@ class Authors extends Component {
 
   onChange = (e) => {
     const { name, value } = e.target;
-    this.props.updateAdminProps([{ prop: "currentAuthor." + name, value }]);
+    this.props.updateAuthorsProps([{ prop: "currentAuthor." + name, value }]);
   };
   onChangeImage = (e) => {
     const image = e.target.files[0];
-    this.props.updateAdminProps([
+    this.props.updateAuthorsProps([
       { prop: "currentAuthor.image", value: image },
     ]);
   };
@@ -112,6 +112,7 @@ class Authors extends Component {
               {!_id && (
                 <FormGroup>
                   <CustomInput
+                    required
                     id="image"
                     type="file"
                     name="image"
@@ -127,7 +128,7 @@ class Authors extends Component {
                     name="dob"
                     dateFormat="dd/MM/yyyy"
                     onChange={(value) =>
-                      this.props.updateAdminProps([
+                      this.props.updateAuthorsProps([
                         { prop: "currentAuthor.dob", value },
                       ])
                     }
@@ -151,12 +152,12 @@ class Authors extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { isAuthorModal, currentAuthor } = state.admin;
+  const { isAuthorModal, currentAuthor } = state.authors;
   return { isModal: isAuthorModal, currentAuthor };
 };
 
 export default connect(mapStateToProps, {
-  updateAdminProps,
+  updateAuthorsProps,
   addNewAuthor,
   updateAuthor,
 })(Authors);

@@ -44,14 +44,19 @@ router.post("/", authUser, async (req, res) => {
           const image = req.file.filename;
           const { name, author, category } = req.body;
           let book = await Book.create({ name, image, author, category });
+
+          book = await book.populate("author")
+            .populate("category")
+            .execPopulate();
           res.json({
             message: "book added successfully",
             data: book,
           });
         }
       } catch (err) {
+        console.log("eee", err);
         return res
-          .status(403)
+          .status(400)
           .send({ message: "Failed, check entered data !!" });
       }
     });

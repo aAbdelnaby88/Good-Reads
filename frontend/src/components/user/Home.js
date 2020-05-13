@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { BrowserRouter as Switch, Route } from "react-router-dom";
 import { connect } from "react-redux";
 import JWT from "jwt-decode";
-
+import axios from "axios";
 import { Container } from "reactstrap";
 
 import Navbar from "./navbar";
@@ -11,6 +11,10 @@ import Categories from "./categories";
 
 import { getUserToken } from "../../utils";
 import { updateLoginField } from "../../actions/loginActions";
+
+import { getAllBooks } from "../../actions/booksActions";
+import { getAllAuthors } from "../../actions/authorsActions";
+import { getAllCategories } from "../../actions/categoriesActions";
 
 class UserHome extends Component {
   componentDidMount() {
@@ -21,6 +25,11 @@ class UserHome extends Component {
 
   componentDidUpdate() {
     if (!this.props.token) this.props.history.push("/");
+    axios.defaults.headers.common["Authorization"] =
+      "Bearer " + this.props.token;
+    this.props.getAllBooks();
+    this.props.getAllAuthors();
+    this.props.getAllCategories();
   }
   render() {
     return (
@@ -39,4 +48,9 @@ const mapStateToProps = (state) => {
   const { token } = state.login;
   return { token };
 };
-export default connect(mapStateToProps, { updateLoginField })(UserHome);
+export default connect(mapStateToProps, {
+  updateLoginField,
+  getAllCategories,
+  getAllBooks,
+  getAllAuthors,
+})(UserHome);
