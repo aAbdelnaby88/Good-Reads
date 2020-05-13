@@ -4,6 +4,7 @@ import ReactTable from "react-table-v6";
 import "react-table-v6/react-table.css";
 import { Button } from "reactstrap";
 
+import { HOST } from "../../../utils";
 import { updateAdminProps, deleteBook } from "../../../actions/adminAction";
 
 class BooksTable extends Component {
@@ -42,9 +43,17 @@ class BooksTable extends Component {
     );
   };
   columns = [
-    { Header: "Id", accessor: "_id" },
+    { Header: "Id", accessor: "_id", minWidth: 200 },
     { Header: "Name", accessor: "name" },
-    { Header: "Image", accessor: "image" },
+    {
+      Header: "Image",
+      Cell: ({ original: { image } }) => (
+        <img
+          src={`${HOST}/images/${image}`}
+          style={{ width: "50px", height: "40px" }}
+        />
+      ),
+    },
     { Header: "Category", accessor: "category.name" },
     {
       Header: "Author",

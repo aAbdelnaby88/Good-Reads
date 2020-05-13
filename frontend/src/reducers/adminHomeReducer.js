@@ -7,19 +7,14 @@ import {
 } from "../actions/types";
 
 const INITIAL_STATE = {
-  token:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im11aGFtbWFkYWxzYWllZDk2QGdtYWlsLmNvbSIsImlzQWRtaW4iOnRydWUsImlhdCI6MTU4ODYzNzM1MSwiZXhwIjoxNTg4NzIzNzUxfQ.EFWYfhBG3e3jjJEKZEKkQt4yGqAAW3AEYKXpjgdzCzo",
+  token: "",
   email: "",
   password: "",
   emailState: "",
 
   activeTab: "1",
   isCategoryModal: false,
-  categories: [
-    { _id: 1, name: "Technology" },
-    { _id: 2, name: "Sports" },
-    { _id: 3, name: "Culture" },
-  ],
+  categories: [],
   currentCategory: {
     name: "",
   },
@@ -31,22 +26,7 @@ const INITIAL_STATE = {
   },
 
   isAuthorModal: false,
-  authors: [
-    {
-      _id: 1,
-      firstName: "Muhammad",
-      lastName: "Alsaied",
-      dob: new Date(),
-      image: "",
-    },
-    {
-      _id: 2,
-      firstName: "Mahmoud",
-      lastName: "Alsaied",
-      dob: new Date(),
-      image: null,
-    },
-  ],
+  authors: [],
   currentAuthor: {},
 };
 

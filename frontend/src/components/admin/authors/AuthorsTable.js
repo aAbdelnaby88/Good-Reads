@@ -4,12 +4,17 @@ import ReactTable from "react-table-v6";
 import "react-table-v6/react-table.css";
 import { Button } from "reactstrap";
 
-import { updateAdminProps } from "../../../actions/adminAction";
+import { HOST } from "../../../utils";
+import { updateAdminProps, deleteAuthor } from "../../../actions/adminAction";
 
 class AuthorsTable extends Component {
-  editAuthorModal = (category) => {
+  editAuthorModal = (author, index) => {
+    author.index = index;
     this.props.updateAdminProps([
-      { prop: "currentAuthor", value: category },
+      {
+        prop: "currentAuthor",
+        value: { ...author, dob: new Date(author.dob) },
+      },
       {
         prop: "isAuthorModal",
         value: !this.props.isModal,
@@ -17,11 +22,11 @@ class AuthorsTable extends Component {
     ]);
   };
 
-  renderActions = (info) => {
+  renderActions = ({ original, index }) => {
     return (
       <div>
         <Button
-          onClick={this.editAuthorModal.bind(this, info.original)}
+          onClick={this.editAuthorModal.bind(this, original, index)}
           color="primary"
           style={{ marginRight: 10, marginLeft: 10 }}
         >
@@ -31,6 +36,7 @@ class AuthorsTable extends Component {
           color="danger"
           onClick={() => {
             if (window.confirm("Are you sure?")) {
+              this.props.deleteAuthor(original._id, index);
             }
           }}
         >
@@ -40,13 +46,21 @@ class AuthorsTable extends Component {
     );
   };
   columns = [
-    { Header: "Id", accessor: "_id" },
-    { Header: "Firstname", accessor: "firstname" },
-    { Header: "Lastname", accessor: "lastname" },
-    { Header: "Image", accessor: "image" },
+    { Header: "Id", accessor: "_id", minWidth: 200 },
+    { Header: "Firstname", accessor: "firstName" },
+    { Header: "Lastname", accessor: "lastName" },
+    {
+      Header: "Image",
+      Cell: ({ original: { image } }) => (
+        <img
+          src={`${HOST}/images/${image}`}
+          style={{ width: "50px", height: "40px" }}
+        />
+      ),
+    },
     {
       Header: "Date of birth",
-      Cell: (info) => info.original.dob.toDateString(),
+      Cell: (info) => new Date(info.original.dob).toDateString(),
     },
 
     {
@@ -83,4 +97,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   updateAdminProps,
+  deleteAuthor,
 })(AuthorsTable);

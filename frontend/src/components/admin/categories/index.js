@@ -14,7 +14,11 @@ import {
 
 import Table from "./CategoriesTable";
 
-import { updateAdminProps } from "../../../actions/adminAction";
+import {
+  updateAdminProps,
+  addNewCategory,
+  updateCategory,
+} from "../../../actions/adminAction";
 
 class Categories extends Component {
   toggle = () => {
@@ -36,6 +40,10 @@ class Categories extends Component {
   };
   onSubmit = (e) => {
     e.preventDefault();
+    const { addNewCategory, updateCategory, currentCategory } = this.props;
+    currentCategory._id
+      ? updateCategory(currentCategory, currentCategory.index)
+      : addNewCategory(currentCategory);
   };
   render() {
     const { isModal, currentCategory } = this.props;
@@ -96,4 +104,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   updateAdminProps,
+  addNewCategory,
+  updateCategory,
 })(Categories);

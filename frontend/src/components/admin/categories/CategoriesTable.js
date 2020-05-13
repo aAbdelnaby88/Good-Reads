@@ -4,10 +4,11 @@ import ReactTable from "react-table-v6";
 import "react-table-v6/react-table.css";
 import { Button } from "reactstrap";
 
-import { updateAdminProps } from "../../../actions/adminAction";
+import { updateAdminProps, deleteCategory } from "../../../actions/adminAction";
 
 class CategoriesTable extends Component {
-  editCategoryModal = (category) => {
+  editCategoryModal = (category, index) => {
+    category.index = index;
     this.props.updateAdminProps([
       { prop: "currentCategory", value: category },
       {
@@ -17,11 +18,11 @@ class CategoriesTable extends Component {
     ]);
   };
 
-  renderActions = (info) => {
+  renderActions = ({ original, index }) => {
     return (
       <div>
         <Button
-          onClick={this.editCategoryModal.bind(this, info.original)}
+          onClick={this.editCategoryModal.bind(this, original, index)}
           color="primary"
           style={{ marginRight: 10, marginLeft: 10 }}
         >
@@ -31,6 +32,7 @@ class CategoriesTable extends Component {
           color="danger"
           onClick={() => {
             if (window.confirm("Are you sure?")) {
+              this.props.deleteCategory(original._id, index);
             }
           }}
         >
@@ -76,4 +78,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   updateAdminProps,
+  deleteCategory,
 })(CategoriesTable);

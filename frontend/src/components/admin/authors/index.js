@@ -20,7 +20,11 @@ import "./customDatePickerWidth.css";
 
 import Table from "./AuthorsTable";
 
-import { updateAdminProps } from "../../../actions/adminAction";
+import {
+  updateAdminProps,
+  addNewAuthor,
+  updateAuthor,
+} from "../../../actions/adminAction";
 
 class Authors extends Component {
   toggle = () => {
@@ -40,12 +44,23 @@ class Authors extends Component {
     const { name, value } = e.target;
     this.props.updateAdminProps([{ prop: "currentAuthor." + name, value }]);
   };
+  onChangeImage = (e) => {
+    const image = e.target.files[0];
+    this.props.updateAdminProps([
+      { prop: "currentAuthor.image", value: image },
+    ]);
+  };
+
   onSubmit = (e) => {
     e.preventDefault();
+    const { addNewAuthor, updateAuthor, currentAuthor } = this.props;
+    currentAuthor._id
+      ? updateAuthor(currentAuthor, currentAuthor.index)
+      : addNewAuthor(currentAuthor);
   };
   render() {
     const { isModal, currentAuthor } = this.props;
-    const { firstname, lastname, dob, image } = currentAuthor;
+    const { _id, firstName, lastName, dob } = currentAuthor;
     return (
       <div>
         <Row>
@@ -75,9 +90,9 @@ class Authors extends Component {
               <FormGroup>
                 <Input
                   type="text"
-                  name="firstname"
+                  name="firstName"
                   placeholder="First name"
-                  value={firstname}
+                  value={firstName}
                   onChange={this.onChange}
                   required
                 />
@@ -86,24 +101,25 @@ class Authors extends Component {
               <FormGroup>
                 <Input
                   type="text"
-                  name="lastname"
+                  name="lastName"
                   placeholder="Last Name"
-                  value={lastname}
+                  value={lastName}
                   onChange={this.onChange}
                   required
                 />
               </FormGroup>
 
-              <FormGroup>
-                <CustomInput
-                  id="image"
-                  type="file"
-                  name="image"
-                  placeholder="choose image"
-                  onChange={this.onChange}
-                  value={image}
-                />
-              </FormGroup>
+              {!_id && (
+                <FormGroup>
+                  <CustomInput
+                    id="image"
+                    type="file"
+                    name="image"
+                    placeholder="choose image"
+                    onChange={this.onChangeImage}
+                  />
+                </FormGroup>
+              )}
               <FormGroup>
                 <div className="customDatePickerWidth">
                   <DatePicker
@@ -141,4 +157,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   updateAdminProps,
+  addNewAuthor,
+  updateAuthor,
 })(Authors);

@@ -11,7 +11,12 @@ import CustomNavItem from "./CustomNavItem";
 
 import { APP_NAME } from "../../utils";
 
-import { updateAdminProps, getAllBooks } from "../../actions/adminAction";
+import {
+  updateAdminProps,
+  getAllBooks,
+  getAllAuthors,
+  getAllCategories,
+} from "../../actions/adminAction";
 
 class Home extends Component {
   componentDidMount() {
@@ -19,6 +24,8 @@ class Home extends Component {
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + this.props.token;
     this.props.getAllBooks();
+    this.props.getAllAuthors();
+    this.props.getAllCategories();
   }
 
   toggle = (tab) => {
@@ -72,6 +79,9 @@ const mapStateToProps = (state) => {
   return { activeTab, token };
 };
 
-export default connect(mapStateToProps, { updateAdminProps, getAllBooks })(
-  Home
-);
+export default connect(mapStateToProps, {
+  updateAdminProps,
+  getAllBooks,
+  getAllAuthors,
+  getAllCategories,
+})(Home);
