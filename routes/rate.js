@@ -81,7 +81,7 @@ app.delete('/:id', async(req, res) => {
     try {
         let rate = await Rate.findByIdAndDelete(req.params.id);
         res.json({
-            message: "category deleted successfully"
+            message: "rate deleted successfully"
         });
     } catch (err) {
         res.json({

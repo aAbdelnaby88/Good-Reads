@@ -14,7 +14,7 @@ import "./App.css";
 import Home from "./components/home";
 import AdminHome from "./components/admin/Home";
 import AdminLogin from "./components/admin/login";
-
+import Footer from "./components/user/footer";
 import UserHome from "./components/user/Home";
 
 import AdminRoute from "./components/admin/AdminRoute";
@@ -45,6 +45,7 @@ function App() {
           <UserLoggedInRoute path="/" exact component={Home} />
           <UserRoute path="/" component={UserHome} />
         </Switch>
+        <Footer />
       </Router>
     </Provider>
   );

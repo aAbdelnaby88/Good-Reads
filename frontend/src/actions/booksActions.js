@@ -53,6 +53,18 @@ export const getAllBooks = () => (dispatch) => {
     });
 };
 
+export const getBook = (_id) => (dispatch) => {
+  axios
+    .get(`${API_HOST}/books/${_id}`)
+    .then((data) => {
+      const book = data.data.data;
+      dispatch(updateBooksProps([{ prop: "currentBook", value: book }]));
+    })
+    .catch((err) => {
+      handleError(err);
+    });
+};
+
 const constructFormDataFromBookObject = (user) => {
   const formData = new FormData();
 

@@ -7,8 +7,12 @@ import { Container } from "reactstrap";
 
 import Navbar from "./navbar";
 import Dashboard from "./dashboard";
+
 import Categories from "./categories";
 import Category from "./categories/category";
+
+import Books from "./books/Books";
+import Book from "./books/Book";
 
 import { getUserToken } from "../../utils";
 import { updateLoginField } from "../../actions/loginActions";
@@ -22,17 +26,17 @@ class UserHome extends Component {
     const token = getUserToken();
     this.props.updateLoginField("token", token);
     this.props.updateLoginField("user", JWT(token));
-  }
-
-  componentDidUpdate() {
-    if (!this.props.token) this.props.history.push("/");
     axios.defaults.headers.common["Authorization"] =
       "Bearer " + this.props.token;
     this.props.getAllBooks();
     this.props.getAllAuthors();
-    this.props.getAllCategories();
+  }
+
+  componentDidUpdate() {
+    if (!this.props.token) this.props.history.push("/");
   }
   render() {
+    const { books } = this.props;
     return (
       <Container>
         <Switch>
@@ -40,6 +44,11 @@ class UserHome extends Component {
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/categories" exact component={Categories} />
           <Route path="/categories/:id" exact component={Category} />
+
+          <Route path="/books" exact>
+            <Books books={books} />
+          </Route>
+          <Route path="/books/:id" exact component={Book} />
         </Switch>
       </Container>
     );
@@ -48,7 +57,8 @@ class UserHome extends Component {
 
 const mapStateToProps = (state) => {
   const { token } = state.login;
-  return { token };
+  const { books } = state.books;
+  return { token, books };
 };
 export default connect(mapStateToProps, {
   updateLoginField,

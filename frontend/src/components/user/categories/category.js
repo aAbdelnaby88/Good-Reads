@@ -1,19 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Row,
-  Col,
-  Card,
-  CardImg,
-  Jumbotron,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-} from "reactstrap";
-import { Link } from "react-router-dom";
+import { Jumbotron } from "reactstrap";
 
-import { HOST } from "../../../utils";
 import { getCategory } from "../../../actions/categoriesActions";
+import Books from "../books/Books";
 
 class Category extends Component {
   componentDidMount() {}
@@ -41,34 +31,7 @@ class Category extends Component {
             {name}
           </h2>
         </Jumbotron>
-        <Row>
-          {books &&
-            books.map(({ _id, name, author, image }, index) => (
-              <Col style={{ marginBottom: "20px" }} key={_id} xs="3">
-                <Card>
-                  <Link to={`/books/${_id}`}>
-                    <CardImg
-                      top
-                      height="300p"
-                      src={`${HOST}/images/${image}`}
-                      alt={name}
-                    />
-                  </Link>
-                  <CardBody>
-                    <CardTitle>
-                      Name: <Link to={`/books/${_id}`}>{name}</Link>
-                    </CardTitle>
-                    <CardSubtitle>
-                      Auther:{" "}
-                      <Link to={`/authors/${author._id}`}>
-                        {author.firstName + " " + author.lastName}
-                      </Link>
-                    </CardSubtitle>
-                  </CardBody>
-                </Card>
-              </Col>
-            ))}
-        </Row>
+        <Books books={books} />
       </div>
     );
   }
