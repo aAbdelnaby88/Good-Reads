@@ -22,12 +22,14 @@ import { getAllAuthors } from "../../actions/authorsActions";
 import { getAllCategories } from "../../actions/categoriesActions";
 
 class UserHome extends Component {
+  constructor() {
+    super();
+    this.token = getUserToken();
+    axios.defaults.headers.common["Authorization"] = "Bearer " + this.token;
+  }
   componentDidMount() {
-    const token = getUserToken();
-    this.props.updateLoginField("token", token);
-    this.props.updateLoginField("user", JWT(token));
-    axios.defaults.headers.common["Authorization"] =
-      "Bearer " + this.props.token;
+    this.props.updateLoginField("token", this.token);
+    this.props.updateLoginField("user", JWT(this.token));
     this.props.getAllBooks();
     this.props.getAllAuthors();
   }

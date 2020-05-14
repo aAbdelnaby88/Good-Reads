@@ -116,3 +116,33 @@ export const deleteBook = (_id, index) => (dispatch) => {
       handleError(err);
     });
 };
+
+export const submitRate = (bookId, value) => (dispatch) => {
+  axios
+    .post(`${API_HOST}/rates/${bookId}`, { value })
+    .then((data) => {
+      const rate = data.data.data;
+
+      dispatch(updateBooksProps([{ prop: "currentBook.myRate", value: rate }]));
+      dispatch(mergeBooksProps([{ prop: "currentBook.rates", value: rate }]));
+    })
+    .catch((err) => {
+      console.log(err);
+    }); 
+};
+
+export const updateRate = (_id, value, index) => (dispatch) => {
+  axios
+    .patch(`${API_HOST}/rates/${_id}`, { value })
+    .then((data) => {
+      dispatch(
+        updateBooksProps([
+          { prop: "currentBook.myRate.value", value },
+          { prop: `currentBook.rates.${index}.value`, value },
+        ])
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

@@ -6,7 +6,6 @@ import {
   Col,
   Media,
   Card,
-  CardImg,
   CardText,
   CardBody,
   CardTitle,
@@ -17,20 +16,31 @@ import { Link } from "react-router-dom";
 import Rating from "react-star-ratings";
 
 import { HOST } from "../../../utils";
-import { getBook } from "../../../actions/booksActions";
+import { getBook, submitRate, updateRate } from "../../../actions/booksActions";
 export class Book extends Component {
   componentDidMount() {
     const _id = this.props.match.params.id;
     this.props.getBook(_id);
   }
   render() {
-    const styles = {
-      container: (base) => ({
-        ...base,
-        flex: 1,
-      }),
-    };
-    const { name, author, category, image } = this.props.book;
+    const {
+      _id,
+      name,
+      author,
+      category,
+      image,
+      myRate,
+      rates,
+    } = this.props.book;
+
+    let userRateIndex = -1;
+    let rate = rates
+      ? rates.reduce((sum, rate, index) => {
+          if (myRate && myRate._id === rate._id) userRateIndex = index;
+          return sum + rate.value;
+        }, 0)
+      : 0;
+    rate /= rates ? rates.length : 1;
     return (
       <div>
         <Row>
@@ -56,11 +66,13 @@ export class Book extends Component {
               />
             </div>
             <Rating
-              rating={4}
+              rating={myRate ? myRate.value : 0}
               starHoverColor="#ffe680"
               starRatedColor="#ffe680"
-              changeRating={(rate) => {
-                console.log("rate", rate);
+              changeRating={(value) => {
+                myRate
+                  ? this.props.updateRate(myRate._id, value, userRateIndex)
+                  : this.props.submitRate(_id, value);
               }}
               numberOfStars={5}
               name="rating"
@@ -94,7 +106,7 @@ export class Book extends Component {
               )}
             </h5>
             <Rating
-              rating={3.6}
+              rating={rate ? rate : 0}
               starRatedColor="#ffe680"
               numberOfStars={5}
               name="rating"
@@ -102,7 +114,9 @@ export class Book extends Component {
               starSpacing="5px"
             />
 
-            <p>3.6 - 21 ratings</p>
+            <p>
+              {rate} - {rates ? rates.length : 0} ratings
+            </p>
           </Col>
         </Row>
         <hr />
@@ -148,4 +162,6 @@ const mapStateToProps = (state, ownProps) => {
   return { book };
 };
 
-export default connect(mapStateToProps, { getBook })(Book);
+export default connect(mapStateToProps, { getBook, submitRate, updateRate })(
+  Book
+);

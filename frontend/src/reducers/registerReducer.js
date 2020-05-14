@@ -16,7 +16,7 @@ export default (state = INITIAL_STATE, action) => {
       const newState = { ...state };
       const { key, value } = action.payload;
       newState[key] = value;
-      break;
+      return newState;
     default:
       return state;
   }

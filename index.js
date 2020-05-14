@@ -24,9 +24,9 @@ app.use(bodyparser.urlencoded({ extended: true }));
 app.use('/api/', authRouter)
 app.use('/api/categories', categRouter)
 app.use('/api/search', searchRouter)
-app.use('/api/rate', rateRouter)
-app.use('/api/review', reviewRouter)
-app.use('/api/todo', todoRouter)
+app.use('/api/rates', rateRouter)
+app.use('/api/reviews', reviewRouter)
+app.use('/api/todos', todoRouter)
 app.use(authMWare)
 
 
