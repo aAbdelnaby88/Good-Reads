@@ -3,6 +3,7 @@ import {
   DELETE_BOOKS_PROPS,
   MERGE_BOOKS_PROPS,
   UPDATE_CATEGORIES_PROPS,
+  UPDATE_AUTHORS_PROPS,
 } from "./types";
 import axios from "axios";
 
@@ -29,7 +30,7 @@ export const mergeBooksProps = (payload) => (dispatch) => {
   });
 };
 
-export const getAllBooks = () => (dispatch) => {
+export const getAllData = () => (dispatch) => {
   axios
     .get(`${API_HOST}/books`)
     .then((data) => {
@@ -42,11 +43,37 @@ export const getAllBooks = () => (dispatch) => {
         else acc[category._id]["books"].push(book);
         return acc;
       }, {});
+
+      const authors = books.reduce((acc, book) => {
+        const author = book.author;
+        if (!acc.hasOwnProperty(author._id))
+          acc[author._id] = { ...author, books: [book] };
+        else acc[author._id]["books"].push(book);
+        return acc;
+      }, {});
+
       dispatch(updateBooksProps([{ prop: "books", value: books }]));
       dispatch({
         type: UPDATE_CATEGORIES_PROPS,
         payload: [{ prop: "categoriesList", value: categories }],
       });
+
+      dispatch({
+        type: UPDATE_AUTHORS_PROPS,
+        payload: [{ prop: "authorsList", value: authors }],
+      });
+    })
+    .catch((err) => {
+      handleError(err);
+    });
+};
+
+export const getAllBooks = () => (dispatch) => {
+  axios
+    .get(`${API_HOST}/books`)
+    .then((data) => {
+      const books = data.data.data;
+      dispatch(updateBooksProps([{ prop: "books", value: books }]));
     })
     .catch((err) => {
       handleError(err);

@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 class Categories extends Component {
   render() {
     const { categories } = this.props;
-    console.log("cc", Object.keys(categories));
     return (
       <div>
         

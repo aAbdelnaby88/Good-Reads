@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   isAuthorModal: false,
   authors: [],
   currentAuthor: {},
+  authorsList: {},
 };
 
 export default (state = INITIAL_STATE, action) => {

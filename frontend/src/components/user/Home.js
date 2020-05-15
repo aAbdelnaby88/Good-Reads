@@ -11,15 +11,16 @@ import Dashboard from "./dashboard";
 import Categories from "./categories";
 import Category from "./categories/category";
 
+import Authors from "./authors";
+import Author from "./authors/Author";
+
 import Books from "./books/Books";
 import Book from "./books/Book";
 
 import { getUserToken } from "../../utils";
 import { updateLoginField } from "../../actions/loginActions";
 
-import { getAllBooks } from "../../actions/booksActions";
-import { getAllAuthors } from "../../actions/authorsActions";
-import { getAllCategories } from "../../actions/categoriesActions";
+import { getAllData } from "../../actions/booksActions";
 
 class UserHome extends Component {
   constructor() {
@@ -30,8 +31,7 @@ class UserHome extends Component {
   componentDidMount() {
     this.props.updateLoginField("token", this.token);
     this.props.updateLoginField("user", JWT(this.token));
-    this.props.getAllBooks();
-    this.props.getAllAuthors();
+    this.props.getAllData();
   }
 
   componentDidUpdate() {
@@ -46,6 +46,9 @@ class UserHome extends Component {
           <Route path="/dashboard" exact component={Dashboard} />
           <Route path="/categories" exact component={Categories} />
           <Route path="/categories/:id" exact component={Category} />
+
+          <Route path="/authors" exact component={Authors} />
+          <Route path="/authors/:id" exact component={Author} />
 
           <Route path="/books" exact>
             <Books books={books} />
@@ -64,7 +67,5 @@ const mapStateToProps = (state) => {
 };
 export default connect(mapStateToProps, {
   updateLoginField,
-  getAllCategories,
-  getAllBooks,
-  getAllAuthors,
+  getAllData,
 })(UserHome);
