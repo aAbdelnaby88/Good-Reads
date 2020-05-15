@@ -27,8 +27,16 @@ router.get("/:id", authUser, async (req, res) => {
       .populate("author")
       .populate("category");
     const rate = await Rate.find({}).where("book").equals(book);
-    const review = await Review.find({}).where("book").equals(book);
-    const todo = await Todo.find({}).where("user").equals(req.user.id);
+    const reviews = await Review.find({})
+      .sort({ date: -1 })
+      .where("book")
+      .equals(book)
+      .populate("user", "firstName lastName");
+    const todo = await Todo.findOne()
+      .where("user")
+      .equals(req.user.id)
+      .where("book")
+      .equals(book);
     const myRate = await Rate.findOne()
       .where("user")
       .equals(req.user.id)
@@ -40,8 +48,8 @@ router.get("/:id", authUser, async (req, res) => {
       data: {
         ...book.toObject(),
         rates: rate,
-        reviews: review,
-        todolist: todo,
+        reviews: reviews,
+        todo,
         myRate: myRate,
       },
     });
@@ -90,7 +98,6 @@ router.patch("/:id", authUser, async (req, res) => {
     return res.status(401).send({ message: "you can not do this only admins" });
   }
   try {
-    console.log(req.body);
     let book = await Book.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     })

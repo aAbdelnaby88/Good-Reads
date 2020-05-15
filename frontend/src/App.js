@@ -23,17 +23,10 @@ import AdminLoggedInRoute from "./components/admin/AdminLoggedInRoute";
 import UserRoute from "./components/user/UserRoute";
 import UserLoggedInRoute from "./components/user/UserLoggedInRoute";
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   RootReducer,
-  compose(
-    applyMiddleware(Thunk),
-    window === "object" &&
-      typeof window.devToolsExtension !== "undefined" &&
-      process.env.NODE_ENV === "development"
-      ? window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__()
-      : (f) => f
-  )
+  composeEnhancers(applyMiddleware(Thunk))
 );
 function App() {
   return (

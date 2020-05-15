@@ -128,7 +128,7 @@ export const submitRate = (bookId, value) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
-    }); 
+    });
 };
 
 export const updateRate = (_id, value, index) => (dispatch) => {
@@ -141,6 +141,55 @@ export const updateRate = (_id, value, index) => (dispatch) => {
           { prop: `currentBook.rates.${index}.value`, value },
         ])
       );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const submitTodo = (bookId, shelve) => (dispatch) => {
+  axios
+    .post(`${API_HOST}/todos/${bookId}`, { shelve })
+    .then((data) => {
+      const todo = data.data.data;
+      dispatch(updateBooksProps([{ prop: "currentBook.todo", value: todo }]));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const updateTodo = (bookId, shelve) => (dispatch) => {
+  axios
+    .patch(`${API_HOST}/todos/${bookId}`, { shelve })
+    .then((data) => {
+      const todo = data.data.data;
+      dispatch(updateBooksProps([{ prop: "currentBook.todo", value: todo }]));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const addReview = (bookId, content) => (dispatch) => {
+  axios
+    .post(`${API_HOST}/reviews/${bookId}`, { content })
+    .then((data) => {
+      const reviews = data.data.data;
+      dispatch(
+        updateBooksProps([{ prop: "currentBook.reviews", value: reviews }])
+      );
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const deleteReview = (_id, index) => (dispatch) => {
+  axios
+    .post(`${API_HOST}/reviews/${_id}`)
+    .then((data) => {
+      dispatch(deleteBooksProps([{ prop: `currentBook.reviews.${index}` }]));
     })
     .catch((err) => {
       console.log(err);

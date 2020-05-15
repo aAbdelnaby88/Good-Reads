@@ -10,19 +10,33 @@ import {
   CardBody,
   CardTitle,
   CardSubtitle,
+  Form,
+  Input,
+  FormGroup,
+  Label,
   Button,
 } from "reactstrap";
 import { Link } from "react-router-dom";
 import Rating from "react-star-ratings";
 
 import { HOST } from "../../../utils";
-import { getBook, submitRate, updateRate } from "../../../actions/booksActions";
+import {
+  updateBooksProps,
+  getBook,
+  submitRate,
+  updateRate,
+  submitTodo,
+  updateTodo,
+  addReview,
+  deleteReview,
+} from "../../../actions/booksActions";
 export class Book extends Component {
   componentDidMount() {
     const _id = this.props.match.params.id;
     this.props.getBook(_id);
   }
   render() {
+    const { userId, book } = this.props;
     const {
       _id,
       name,
@@ -31,7 +45,10 @@ export class Book extends Component {
       image,
       myRate,
       rates,
-    } = this.props.book;
+      todo,
+      review,
+      reviews,
+    } = book;
 
     let userRateIndex = -1;
     let rate = rates
@@ -40,7 +57,8 @@ export class Book extends Component {
           return sum + rate.value;
         }, 0)
       : 0;
-    rate /= rates ? rates.length : 1;
+    rate = rates ? rate / rates.length : 0;
+
     return (
       <div>
         <Row>
@@ -61,8 +79,19 @@ export class Book extends Component {
             />
             <div style={{ width: "80%" }}>
               <Select
-                options={["want to read", "reading", "read"]}
-                getOptionLabel={(label) => label}
+                options={[
+                  { shelve: "want to read" },
+                  { shelve: "reading" },
+                  { shelve: "read" },
+                ]}
+                value={todo}
+                getOptionLabel={(todo) => todo.shelve}
+                getOptionValue={(todo) => todo}
+                onChange={(newTodo) => {
+                  todo
+                    ? this.props.updateTodo(_id, newTodo.shelve)
+                    : this.props.submitTodo(_id, newTodo.shelve);
+                }}
               />
             </div>
             <Rating
@@ -95,14 +124,30 @@ export class Book extends Component {
             <h5>
               By:{" "}
               {author && (
-                <Link to={`/authors/${author._id}`}>
+                <Link
+                  style={{
+                    textTransform: "capitalize",
+                    fontWeight: "bold",
+                    color: "#999999",
+                  }}
+                  to={`/authors/${author._id}`}
+                >
                   {author.firstName + " " + author.lastName}
                 </Link>
               )}
             </h5>
             <h5 style={{ fontWeight: "bold", textTransform: "uppercase" }}>
               {category && (
-                <Link to={`/categories/${category._id}`}>{category.name}</Link>
+                <Link
+                  style={{
+                    textTransform: "capitalize",
+                    fontWeight: "bold",
+                    color: "#999999",
+                  }}
+                  to={`/categories/${category._id}`}
+                >
+                  {category.name}
+                </Link>
               )}
             </h5>
             <Rating
@@ -122,33 +167,94 @@ export class Book extends Component {
         <hr />
         <Row>
           <Col sm="12">
-            <Card>
-              <CardBody>
-                <div
-                  style={{ display: "flex", justifyContent: "space-between" }}
+            <Form
+              onSubmit={(e) => {
+                e.preventDefault();
+                this.props.addReview(_id, review);
+              }}
+            >
+              <FormGroup>
+                <Label>Write your review:</Label>
+                <Input
+                  placeholder="Write something"
+                  value={review}
+                  type="textarea"
+                  onChange={(e) => {
+                    this.props.updateBooksProps([
+                      { prop: "currentBook.review", value: e.target.value },
+                    ]);
+                  }}
+                  required
+                />
+                <FormGroup
+                  style={{
+                    paddingTop: "10px",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                  }}
                 >
-                  <CardTitle style={{ fontWeight: "bold" }}>
-                    <h4>Muhammad Alsaied</h4>
-                  </CardTitle>
-                  <Button className="btn btn-danger">
-                    <i className="fa fa-trash"></i>
+                  <Button type="submit" color="primary">
+                    Add review
                   </Button>
-                </div>
-                <CardSubtitle style={{ textDecoration: "underline" }}>
-                  {new Date().toDateString()}
-                </CardSubtitle>
+                </FormGroup>
+              </FormGroup>
+            </Form>
+          </Col>
+        </Row>
+        <Row>
+          <Col sm="12">
+            {reviews &&
+              reviews.map(
+                (
+                  {
+                    _id,
+                    content,
+                    date,
+                    user: { _id: reviewrId, firstName, lastName },
+                  },
+                  index
+                ) => {
+                  return (
+                    <Card>
+                      <CardBody>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                          }}
+                        >
+                          <div>
+                            <CardTitle style={{ fontWeight: "bold" }}>
+                              <h5>By: {`${firstName} ${lastName}`}</h5>
+                            </CardTitle>
+                            <CardSubtitle
+                              style={{ textDecoration: "underline" }}
+                            >
+                              {new Date(date).toDateString()}
+                            </CardSubtitle>
+                          </div>
+                          {userId === reviewrId && (
+                            <Button
+                              className="btn btn-danger"
+                              onClick={() => {
+                                if (window.confirm("Are you sure?")) {
+                                  this.props.deleteReview(_id, index);
+                                }
+                              }}
+                            >
+                              <i className="fa fa-trash"></i>
+                            </Button>
+                          )}
+                        </div>
 
-                <br />
-                <CardText style={{ textTransform: "capitalize" }}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Praesent condimentum purus ligula, quis porta diam fringilla
-                  vel. Mauris quis diam a quam maximus mattis ornare et purus.
-                  Interdum et malesuada fames ac ante ipsum primis in faucibus.
-                  Proin ac sagittis urna, vitae interdum metus. Praesent in
-                  lacus augue. Ut diam lorem, porta quis imperdiet sit amet,
-                </CardText>
-              </CardBody>
-            </Card>
+                        <CardText style={{ textTransform: "capitalize" }}>
+                          {content}
+                        </CardText>
+                      </CardBody>
+                    </Card>
+                  );
+                }
+              )}
           </Col>
         </Row>
       </div>
@@ -158,10 +264,17 @@ export class Book extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   const book = state.books.currentBook;
-
-  return { book };
+  const userId = state.login.user.id;
+  return { book, userId };
 };
 
-export default connect(mapStateToProps, { getBook, submitRate, updateRate })(
-  Book
-);
+export default connect(mapStateToProps, {
+  updateBooksProps,
+  getBook,
+  submitRate,
+  updateRate,
+  submitTodo,
+  updateTodo,
+  addReview,
+  deleteReview,
+})(Book);

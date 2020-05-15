@@ -12,11 +12,28 @@ export default function Book({ _id, name, image, author }) {
       </Link>
       <CardBody>
         <CardTitle>
-          Name: <Link to={`/books/${_id}`}>{name}</Link>
+          Name:{" "}
+          <Link
+            style={{
+              textTransform: "capitalize",
+              fontWeight: "bold",
+              color: "#999999",
+            }}
+            to={`/books/${_id}`}
+          >
+            {name}
+          </Link>
         </CardTitle>
         <CardSubtitle>
           By:{" "}
-          <Link to={`/authors/${author._id}`}>
+          <Link
+            style={{
+              textTransform: "capitalize",
+              fontWeight: "bold",
+              color: "#999999",
+            }}
+            to={`/authors/${author._id}`}
+          >
             {author.firstName + " " + author.lastName}
           </Link>
         </CardSubtitle>
