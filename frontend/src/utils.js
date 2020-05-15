@@ -7,7 +7,7 @@ export const getUserToken = () => localStorage.getItem("token");
 export const setUserToken = (token) => localStorage.setItem("token", token);
 export const deleteUserToken = () => localStorage.removeItem("token");
 
-export const HOST = "http://localhost:5000";
+export const HOST = "";
 export const API_HOST = `${HOST}/api`;
 
 export const showMessage = (title, message, type) => {

@@ -19,7 +19,7 @@ import {
 import { Link } from "react-router-dom";
 import Rating from "react-star-ratings";
 
-import { HOST } from "../../../utils";
+import { HOST, APP_NAME } from "../../../utils";
 import {
   updateBooksProps,
   getBook,
@@ -35,6 +35,7 @@ export class Book extends Component {
     const _id = this.props.match.params.id;
     this.props.getBook(_id);
   }
+
   render() {
     const { userId, book } = this.props;
     const {
@@ -58,6 +59,8 @@ export class Book extends Component {
         }, 0)
       : 0;
     rate = rates ? rate / rates.length : 0;
+
+    document.title = `${name}- ${APP_NAME}`;
 
     return (
       <div>

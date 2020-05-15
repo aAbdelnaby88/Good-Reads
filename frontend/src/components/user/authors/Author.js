@@ -2,16 +2,20 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Jumbotron, CardImg, Row, Col } from "reactstrap";
 
-import { HOST } from "../../../utils";
+import { HOST, APP_NAME } from "../../../utils";
 import Books from "../books/Books";
 
 class Author extends Component {
   render() {
     const { author } = this.props;
-    console.log("author", author);
     if (!author) return <div></div>;
 
     const { firstName, lastName, dob, image, books } = author;
+
+    const name = author.firstName + " " + author.lastName;
+
+    document.title = `${name} - ${APP_NAME}`;
+
     return (
       <div>
         <Jumbotron

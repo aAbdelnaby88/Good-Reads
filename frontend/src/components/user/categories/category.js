@@ -4,15 +4,17 @@ import { Jumbotron } from "reactstrap";
 
 import { getCategory } from "../../../actions/categoriesActions";
 import Books from "../books/Books";
+import { APP_NAME } from "../../../utils";
 
 class Category extends Component {
-  componentDidMount() {}
   render() {
     const { category } = this.props;
 
     if (!category) return <div></div>;
 
     const { name, books } = category;
+    document.title = `${name} - ${APP_NAME}`;
+
     return (
       <div>
         <Jumbotron

@@ -15,6 +15,8 @@ const INITIAL_STATE = {
 
   activeTodosTab: "1",
   todos: [],
+
+  search: [],
 };
 
 export default (state = INITIAL_STATE, action) => {

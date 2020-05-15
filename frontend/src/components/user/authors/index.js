@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Row, Col, } from "reactstrap";
+import { Row, Col } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Card, CardImg, CardBody, CardTitle } from "reactstrap";
 
-import { HOST } from "../../../utils";
+import { HOST, APP_NAME } from "../../../utils";
 
 class Authors extends Component {
+  componentWillMount() {
+    document.title = `Authors - ${APP_NAME}`;
+  }
   render() {
     const { authors } = this.props;
     console.log(authors);

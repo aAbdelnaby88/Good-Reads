@@ -80,6 +80,19 @@ export const getAllBooks = () => (dispatch) => {
     });
 };
 
+export const searchBooks = (slug) => (dispatch) => {
+  axios
+    .get(`${API_HOST}/search/${slug}`)
+    .then((data) => {
+      const books = data.data.data;
+      console.log("search", books);
+      dispatch(updateBooksProps([{ prop: "search", value: books }]));
+    })
+    .catch((err) => {
+      handleError(err);
+    });
+};
+
 export const getBook = (_id) => (dispatch) => {
   axios
     .get(`${API_HOST}/books/${_id}`)
@@ -203,7 +216,9 @@ export const updateTodoListItem = (bookId, shelve, index) => (dispatch) => {
     .patch(`${API_HOST}/todos/${bookId}`, { shelve })
     .then((data) => {
       const todo = data.data.data;
-      dispatch(updateBooksProps([{ prop: `todos.${index}.shelve`, value: shelve }]));
+      dispatch(
+        updateBooksProps([{ prop: `todos.${index}.shelve`, value: shelve }])
+      );
     })
     .catch((err) => {
       console.log(err);

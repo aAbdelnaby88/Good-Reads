@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { BrowserRouter as Switch, Route } from "react-router-dom";
+import { BrowserRouter as Switch, Route, Router } from "react-router-dom";
 import { connect } from "react-redux";
 import JWT from "jwt-decode";
 import axios from "axios";
@@ -14,8 +14,10 @@ import Category from "./categories/category";
 import Authors from "./authors";
 import Author from "./authors/Author";
 
-import Books from "./books/Books";
+import Books from "./books";
 import Book from "./books/Book";
+
+import Search from "./search";
 
 import { getUserToken } from "../../utils";
 import { updateLoginField } from "../../actions/loginActions";
@@ -41,20 +43,23 @@ class UserHome extends Component {
     const { books } = this.props;
     return (
       <Container>
-        <Switch>
-          <Navbar />
-          <Route path="/dashboard" exact component={Dashboard} />
-          <Route path="/categories" exact component={Categories} />
-          <Route path="/categories/:id" exact component={Category} />
+          <Switch>
+          <Route component={Navbar} />
 
-          <Route path="/authors" exact component={Authors} />
-          <Route path="/authors/:id" exact component={Author} />
+            <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/categories" exact component={Categories} />
+            <Route path="/categories/:id" exact component={Category} />
 
-          <Route path="/books" exact>
-            <Books books={books} />
-          </Route>
-          <Route path="/books/:id" exact component={Book} />
-        </Switch>
+            <Route path="/authors" exact component={Authors} />
+            <Route path="/authors/:id" exact component={Author} />
+
+            <Route path="/search" exact component={Search} />
+
+            <Route path="/books" exact>
+              <Books books={books} />
+            </Route>
+            <Route path="/books/:id" exact component={Book} />
+          </Switch>
       </Container>
     );
   }

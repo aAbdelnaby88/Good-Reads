@@ -1,4 +1,9 @@
-import { UPDATE_REGISTER_FIELD, UPDATE_GENERAL_PROPS } from "./types";
+import {
+  UPDATE_REGISTER_FIELD,
+  UPDATE_GENERAL_PROPS,
+  UPDATE_LOGIN_FIELD,
+  RESET_REGISTER_FIELDS,
+} from "./types";
 import axios from "axios";
 import { API_HOST, handleError, showMessage, setUserToken } from "../utils";
 
@@ -30,7 +35,11 @@ export const signupUser = (user) => (dispatch) => {
     .then((res) => {
       const { token, message } = res.data;
       setUserToken(token);
-      dispatch(updateGeneralProps([{ prop: token, value: token }]));
+      dispatch({
+        type: UPDATE_LOGIN_FIELD,
+        payload: { key: "token", value: token },
+      });
+      dispatch({ type: RESET_REGISTER_FIELDS });
       showMessage("Success!", message, "success");
     })
     .catch((err) => handleError(err));

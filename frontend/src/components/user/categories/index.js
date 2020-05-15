@@ -2,8 +2,13 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Row, Col,Jumbotron } from "reactstrap";
 import { Link } from "react-router-dom";
+import {APP_NAME} from '../../../utils'
 
 class Categories extends Component {
+  componentDidMount(){
+    document.title = `Categories - ${APP_NAME}`;
+
+  }
   render() {
     const { categories } = this.props;
     return (

@@ -1,4 +1,4 @@
-import { UPDATE_REGISTER_FIELD } from "../actions/types";
+import { UPDATE_REGISTER_FIELD, RESET_REGISTER_FIELDS } from "../actions/types";
 
 const INITIAL_STATE = {
   firstName: "",
@@ -17,6 +17,8 @@ export default (state = INITIAL_STATE, action) => {
       const { key, value } = action.payload;
       newState[key] = value;
       return newState;
+    case RESET_REGISTER_FIELDS:
+      return INITIAL_STATE
     default:
       return state;
   }

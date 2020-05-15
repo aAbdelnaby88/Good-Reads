@@ -8,7 +8,7 @@ router.get("/", authUser, async (req, res) => {
   const u = User.findById(req.user.id);
   if (!u) return res.status(401).send({ message: "Login First" });
   try {
-    const list = await Todo.find({}).populate("book");
+    const list = await Todo.find({ user: req.user.id }).populate("book");
     return res.json({
       message: "your todo list",
       data: list,
@@ -41,7 +41,7 @@ router.patch("/:book", authUser, async (req, res) => {
   if (!u) return res.status(401).send({ message: "Login First" });
   try {
     const todo = await Todo.findOneAndUpdate(
-      { book: req.params.book },
+      { book: req.params.book, user: req.user.id },
       { shelve: req.body.shelve },
       { new: true }
     );
