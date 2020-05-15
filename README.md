@@ -2,10 +2,15 @@
 # Good-Reads
 Web App in " Nodejs and Reactjs "
 
-A website simulates the popular good reads website using node.js and react.js
+A website simulates the popular good reads website using node.js and react.js.
+
 Here is a live [Demo](good-reads-chatty-okapi-jx.eu-gb.mybluemix.net), Access the [Admin panel](good-reads-chatty-okapi-jx.eu-gb.mybluemix.net/admin)
-Admin Credentials for testing
+
+
+Admin Credentials for testing:
+
 Email: admin@goodreads.com
+
 password: 123456
 
 #**Installation**
@@ -24,9 +29,14 @@ ADMIN_PASSWORD=123456
 ```
 
 **#Contributers**
+
 1- [MuhammadAlsaied](https://github.com/MuhammadAlsaied)
+
 2- [aAbdelnaby88](https://github.com/aAbdelnaby88)
+
 3- [AymanMagdy](https://github.com/AymanMagdy)
+
 4- [mo7amedsalah](https://github.com/mo7amedsalah)
+
 5- [m-bassam94](https://github.com/m-bassam94)
 
