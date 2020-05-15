@@ -12,6 +12,9 @@ const INITIAL_STATE = {
   currentBook: {
     name: "",
   },
+
+  activeTodosTab: "1",
+  todos: [],
 };
 
 export default (state = INITIAL_STATE, action) => {

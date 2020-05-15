@@ -198,6 +198,18 @@ export const updateTodo = (bookId, shelve) => (dispatch) => {
     });
 };
 
+export const updateTodoListItem = (bookId, shelve, index) => (dispatch) => {
+  axios
+    .patch(`${API_HOST}/todos/${bookId}`, { shelve })
+    .then((data) => {
+      const todo = data.data.data;
+      dispatch(updateBooksProps([{ prop: `todos.${index}.shelve`, value: shelve }]));
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
 export const addReview = (bookId, content) => (dispatch) => {
   axios
     .post(`${API_HOST}/reviews/${bookId}`, { content })
@@ -220,5 +232,17 @@ export const deleteReview = (_id, index) => (dispatch) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+
+export const getAllTodos = () => (dispatch) => {
+  axios
+    .get(`${API_HOST}/todos`)
+    .then((data) => {
+      const todos = data.data.data;
+      dispatch(updateBooksProps([{ prop: "todos", value: todos }]));
+    })
+    .catch((err) => {
+      handleError(err);
     });
 };

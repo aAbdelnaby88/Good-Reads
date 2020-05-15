@@ -31,7 +31,6 @@ class Home extends Component {
   }
 
   toggle = (tab) => {
-    console.log(this.props.activeTab, tab);
     if (this.props.activeTab !== tab)
       this.props.updateAdminProps([{ prop: "activeTab", value: tab }]);
   };
