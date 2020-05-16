@@ -4,7 +4,7 @@ Web App in " Nodejs and Reactjs "
 
 A website simulates the popular good reads website using node.js and react.js.
 
-Here is a live [Demo](good-reads-chatty-okapi-jx.eu-gb.mybluemix.net), Access the [Admin panel](good-reads-chatty-okapi-jx.eu-gb.mybluemix.net/admin)
+Here is a live [Demo](good-reads-chatty-okapi-jx.eu-gb.mybluemix.net), Access the [Admin panel](http://good-reads-cheerful-camel-sl.eu-gb.mybluemix.net/admin)
 
 
 Admin Credentials for testing:
